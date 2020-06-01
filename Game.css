@@ -18,13 +18,28 @@ body {
 
 }
 main {
-  background-color: #000;
+  /* background-color: #000; */
+
+  background-image: url(kq1_sms.png);
+  background-size: 8000px 3200px;
+  background-position: -36px -26px;
+  /* (995 gaps horiz)
+  -1032
+  -2027
+  -3022
+
+  Down: (529 gaps vert)
+  -555
+  -1084
+
+  */
+  clip: rect(0px,960px,503px,0px);
+
   top: 50vh;
   left: 50vw;
   width: 960px;
   height: 627px;
   position: absolute;
-  opacity: 0;
   overflow: hidden;
   transform: scale3d(var(--scale-x), var(--scale-y), 1)  translate(-50%, -50%);
   transform-origin: 0 0;
