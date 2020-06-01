@@ -1,0 +1,39 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+body {
+  background: #000;
+  color: #B2CDDE;
+  font-family: courier new;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+  position: relative;
+}
+@media (orientation: landscape) {
+
+}
+@media (orientation: portrait) {
+
+}
+main {
+  background-color: #000;
+  top: 50vh;
+  left: 50vw;
+  width: 960px;
+  height: 627px;
+  position: absolute;
+  opacity: 0;
+  overflow: hidden;
+  transform: scale3d(var(--scale-x), var(--scale-y), 1)  translate(-50%, -50%);
+  transform-origin: 0 0;
+}
+main * {
+  position: absolute;
+}
+
+x-ego {
+  --sprite-size: 50px;
+
+}
