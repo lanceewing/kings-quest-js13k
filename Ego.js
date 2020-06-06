@@ -1,4 +1,4 @@
-class Ego extends Sprite {
+class Ego extends Actor {
 
     /**
      * Constructor for Ego.

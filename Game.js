@@ -1,5 +1,27 @@
 class Game {
 
+    actors = [];
+
+    inventory = {};
+    
+    verb = 'Walk to';
+    
+    command = 'Walk to';   // Current constructed command, either full or partial
+    
+    thing = '';
+
+    time = 0;
+
+    score = 0;
+
+    itemTop = -1;
+
+    rooms = [];
+
+    props = [];
+
+    flags = {};
+
     /**
      * Constructor for Game.
      * 
@@ -7,7 +29,9 @@ class Game {
      */
     constructor(screen) {
         this.screen = screen;
-        this.time = 0;
+        this.overlay = document.createElement('span');
+        this.overlay.id = 'overlay';
+        this.screen.appendChild(this.overlay);
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
         this.start();
@@ -255,5 +279,56 @@ class Game {
         let item = this.inventory[name];
         this.items.removeChild(item);
         delete this.inventory[name];
+    }
+
+    /**
+     * Handles scrolling of the inventory list.
+     * 
+     * @param {number} dir
+     */
+    scrollInv(dir) {
+        let newTop = this.itemTop + (27 * dir);
+        let invCount = $.items.children.length;
+        if ((newTop <= -1) && (newTop > -((invCount - 4) * 27))) {
+            this.itemTop = newTop;
+            this.items.style.top = this.itemTop + 'px';
+        }
+    }
+
+    /**
+     * Fades in the given DOM Element.
+     * 
+     * @param {Object} elem The DOM Element to fade in.
+     */
+    fadeIn(elem) {
+        // Remove any previous transition.
+        elem.style.transition = 'opacity 0.5s';
+        elem.style.opacity = 1.0;
+        setTimeout(function () {
+            // This is so that other css styles can set transitions on the element
+            // while we're not fading in.
+            elem.style.removeProperty('transition');
+        }, 700);
+    }
+      
+    /**
+     * Fades out the given DOM Element.
+     * 
+     * @param {Object} elem The DOM Element to fade out.
+     */
+    fadeOut(elem) {
+        elem.style.transition = 'opacity 0.5s';
+        elem.style.opacity = 0.0;
+    }
+  
+    /**
+     * Shakes the screen.
+     */
+    shakeScreen() {
+        let screen = this.screen;
+        screen.classList.add('shake');
+        setTimeout(function() {
+            screen.classList.remove('shake');
+        }, 1000);
     }
 }

@@ -22,6 +22,8 @@ class Util {
      * been done deliberately.
      * 
      * @param {number} seed 
+     * 
+     * @returns The created Linear Congruential Generator.
      */
     static random(seed) {
         let _random = seed || 481731;
@@ -29,6 +31,129 @@ class Util {
             _random = (_random * 1664525 + 1013904223) & 0xFFFFFFFF;
             return (_random % n);
         };
+    }
+
+    /**
+     * Renders the given emoji text at that given font size on a canvas. Returns that canvas.
+     * 
+     * @param {*} emojiText The emoji text to render.
+     * @param {*} size The font size to render the emoji text at.
+     * 
+     * @returns The created canvas with the rendered emoji text at the given font size.
+     */
+    static renderEmoji(emojiText, size) {
+        let fontDef = `${size}px serif`;
+        let canvas = document.createElement('canvas');
+        let ctx = canvas.getContext('2d');
+        ctx.font = fontDef;
+        ctx.textAlign = "center"; 
+        ctx.textBaseline = "ideographic";
+        
+        let textMetrics = ctx.measureText(emojiText);
+        canvas.height = size + (size / 8);
+        canvas.width = textMetrics.width - (size / 4);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontDef;
+        ctx.textAlign = "center"; 
+        ctx.textBaseline = "ideographic";
+        ctx.fillText(emojiText, canvas.width / 2, canvas.height);
+
+        // On Windows, this reduces the thick black edges.
+        Util.reduceEdges(ctx, 0, 0);
+
+        // Redraw the canvas, so that we can add a shadow.
+        let emojiCanvas = document.createElement('canvas');
+        emojiCanvas.width = canvas.width;
+        emojiCanvas.height = canvas.height; 
+        let emojiCtx = emojiCanvas.getContext('2d');
+        emojiCtx.shadowColor = "black"; 
+        emojiCtx.shadowBlur = 3;
+        emojiCtx.drawImage(canvas, 0, 0);
+
+        return emojiCanvas;
+    }
+
+    /**
+     * For the image data in the given canvas context, applies a fill algorithm
+     * to trim off the thick black edges that Windows emojis have around them.
+     * On other operating systems, this will hopefully do nothing, but lets 
+     * see.
+     * 
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {number} startX 
+     * @param {number} startY 
+     */
+    static reduceEdges(ctx, startX, startY) {
+        let width = ctx.canvas.width;
+        let height = ctx.canvas.height;
+        let dataWidth = (width << 2);
+        let imgData = ctx.getImageData(0, 0, width, height);
+        let visitMap = new Uint32Array(imgData.data.length);
+        let queue = new Queue();
+
+        console.clear();
+
+        queue.enqueue(startX);
+        queue.enqueue(startY);
+
+        try {
+            while (!queue.isEmpty()) {
+                // Get pixel position to test from queue.
+                let x = queue.dequeue();
+                let y = queue.dequeue();
+                let pos = ((y * dataWidth) + (x << 2));
+
+                // Check if we've been here before.
+                let visited = visitMap[pos];
+                if (visited) {
+                    continue;
+                }
+                visitMap[pos] = 1;
+
+                let red = imgData.data[pos];
+                let green = imgData.data[pos + 1];
+                let blue = imgData.data[pos + 2];
+                let alpha = imgData.data[pos + 3];
+                let brightness = Math.round(Math.sqrt((red * red * 0.241) + (green * green * 0.691) + (blue * blue * 0.068)));
+                let spread = false;
+
+                if (alpha == 0) {
+                    spread = true;
+                }
+                else if ((red == 0) && (green == 0) && (blue == 0)) {
+                    imgData.data[pos + 3] = 0;
+                    spread = true;
+                }
+                else if (brightness < 70) {
+                    imgData.data[pos + 3] = Math.round(brightness * (255 / 70));
+                    spread = true;
+                }
+
+                if (spread) {
+                    if (x > 0) {
+                        queue.enqueue(x - 1);
+                        queue.enqueue(y);
+                    }
+                    if (x < width - 1) {
+                        queue.enqueue(x + 1);
+                        queue.enqueue(y);
+                    }
+                    if (y > 0) {
+                        queue.enqueue(x);
+                        queue.enqueue(y - 1);
+                    }
+                    if (y < height - 1) {
+                        queue.enqueue(x);
+                        queue.enqueue(y + 1);
+                    }
+                }
+            }
+        }
+        catch (err) {
+            console.log('err: ' + err);
+        }
+
+        ctx.putImageData(imgData, 0, 0);
     }
 
 }
