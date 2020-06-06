@@ -127,4 +127,133 @@ class Game {
 
     }
 
+    /**
+     * Adds the given prop to the current room screen.
+     */
+    addPropToRoom(prop) {
+        let obj;
+
+        // We cache the obj when it isn't in the dom rather than recreate. It might remember it's state.
+        obj = prop[7];
+
+        if (!obj) {
+            // Switch on the type of prop
+            switch (prop[1]) {
+                case 0: // Actor
+                    switch (prop[2]) {
+                        case 'pod':
+                            obj = new Actor(prop[3], prop[4], 'black', 0.95, 10, 'black');
+                            obj.setDirection(Sprite.OUT);
+                            break;
+                    }
+                    obj.setPosition(prop[5], 0, prop[6]);
+                    break;
+
+                case 1: // Item
+                    obj = new Obj(prop[3], prop[4], prop[8]);
+                    obj.item = true;
+                    break;
+
+                case 2: // Prop
+                    obj = new Obj(prop[3], prop[4], prop[8]);
+                    break;
+            }
+
+            // If the name has a _ then use parts of id to add class names.
+            if (prop[2].indexOf('_') > -1) {
+                let parts = prop[2].split('_');
+                for (let i = 0; i < parts.length; i++) {
+                    obj.elem.classList.add(parts[i]);
+                }
+            }
+
+            if (prop[8]) {
+                // If this is a unique object, then we set the id.
+                $[prop[2]] = obj;
+                obj.elem.id = prop[2];
+            } else {
+                // If this is not a unique object, then we set a class.
+                obj.elem.classList.add(prop[2]);
+            }
+            obj.elem.dataset.name = prop[2].replace('_', ' ');
+
+            obj.propData = prop;
+            obj.add();
+            obj.setPosition(prop[5], 0, prop[6]);
+            prop[7] = obj;
+        }
+        else {
+            obj.add();
+        }
+
+        this.objs.push(obj);
+    }
+
+    /**
+     * Adds the necessarily event listens to the given element to allow it to be 
+     * interacted with as an object in the current room.
+     */
+    addObjEventListeners(elem) {
+        // It is important that we don't use addEventListener in this case. We need to overwrite
+        // the event handler on entering each room.
+        elem.onmouseenter = e => this.objMouseEnter(e);
+        elem.onmouseleave = e => this.objMouseLeave(e);
+        elem.onclick = e => this.objClicked(e);
+    }
+
+    /**
+     * 
+     * @param {*} e 
+     */
+    objMouseEnter(e) {
+        this.thing = (e.target.dataset.name? e.target.dataset.name : (e.target.id? e.target.id.replace('_',' ') : e.target.className));
+    }
+
+    /**
+     * 
+     * @param {*} e 
+     */
+    objMouseLeave(e) {
+        this.thing = '';
+    }
+
+    /**
+     * 
+     * @param {*} e 
+     */
+    objClicked(e) {
+        this.thing = (e.target.dataset.name? e.target.dataset.name : (e.target.id? e.target.id.replace('_',' ') : e.target.className));
+        this.processCommand(e);
+    }
+      
+    /**
+     * Adds the given item to the inventory.
+     */
+    getItem(name) {
+        let item = document.createElement('div');
+        item.innerHTML = name;
+        this.items.appendChild(item);
+
+        item.onmouseenter = e => this.objMouseEnter(e);
+        item.onmouseleave = e => this.objMouseLeave(e);
+        item.onclick = e => this.objClicked(e);
+
+        this.inventory[name] = item;
+    }
+
+    /**
+     * Checks if the given item is in the inventory.
+     */
+    hasItem(name) {
+        return this.inventory.hasOwnProperty(name);
+    }
+
+    /**
+     * Removes the given item from the inventory.
+     */
+    dropItem(name) {
+        let item = this.inventory[name];
+        this.items.removeChild(item);
+        delete this.inventory[name];
+    }
 }
