@@ -191,7 +191,7 @@ class UserInput {
 
     // Keep track of what the previous state of each key was.
     this.oldkeys = {};
-    for (var k in this.keys) {
+    for (let k in this.keys) {
       this.oldKeys[k] = this.keys[k];
     }
     this.oldJoystick = this.joystick;

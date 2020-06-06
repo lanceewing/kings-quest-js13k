@@ -16,11 +16,15 @@ class Game {
 
     itemTop = -1;
 
-    rooms = [];
+    rooms = [
+        []
+    ];
 
     props = [];
 
     flags = {};
+
+    inputEnabled = false;
 
     /**
      * Constructor for Game.
@@ -52,15 +56,52 @@ class Game {
         this.resizeScreen();
         window.onresize = e => this.resizeScreen(e);
 
-        // this.ego = document.createElement('x-ego');
-        // this.ego.init(this);
-        // this.screen.appendChild(this.ego);
-
-        this.objs = [];
-
         this.userInput.enableInput();
         this.running = true;
+        this.init();
+
         this.loop();
+    }
+
+    /**
+     * Initialised the parts of the game that need initialising on both
+     * the initial start and then subsequent restarts. 
+     */
+    init() {
+        this._gameOver = false;
+        this.inputEnabled = true;
+        this.time = 0;
+  
+        window.onclick = null;
+  
+        this.screen.onclick = e => this.processCommand(e);
+  
+        // For restarts, we'll need to remove the objects from the screen.
+        if (this.objs) {
+          for (let i=0; i<this.objs.length; i++) {
+            this.objs[i].remove();
+          }
+        }
+        
+        // Set the room back to the start, and clear the object map.
+        this.objs = [];
+        this.room = 1;
+        
+        // Starting inventory.
+        //this.getItem('dagger');
+  
+        // Create Ego (the main character) and add it to the screen.
+        this.ego = document.createElement('x-ego');
+        this.ego.init(this);
+        this.ego.setPosition(234, 0, 600);
+        this.ego.nesw = 1;
+        this.screen.appendChild(this.ego);
+  
+        // Enter the starting room.
+        this.newRoom();
+        
+        // Fade in the whole screen at the start.
+        //this.fadeIn(this.wrap);
     }
 
     /**
@@ -149,6 +190,40 @@ class Game {
 
         //this.ego.update(this);
 
+    }
+
+    /**
+     * Invoked when Ego is entering a room.  
+     */
+    newRoom() {
+        // Remove the previous room's Objs from the screen.
+        for (let i = 0; i < this.objs.length; i++) {
+            this.objs[i].remove();
+        }
+        this.objs = [];
+
+        this.roomData = this.rooms[this.room - 1];
+
+        // Add props
+        for (let i = 0; i < this.props.length; i++) {
+            let prop = this.props[i];
+
+            // Is this prop in the current room?
+            if (prop[0] == this.room) {
+                this.addPropToRoom(prop);
+            }
+        }
+
+        // Add event listeners for objects in the room.
+        // TODO: Need to put overlay outside screen.
+        let screenObjs = this.screen.children;
+        for (let i = 0; i < screenObjs.length; i++) {
+            this.addObjEventListeners(screenObjs[i]);
+        }
+
+        this.fadeIn(this.screen);
+        this.ego.show();
+        this.fadeIn(this.ego);
     }
 
     /**

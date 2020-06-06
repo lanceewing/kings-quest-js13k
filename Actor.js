@@ -56,7 +56,7 @@ class Actor extends Sprite {
       let game = this.game;
       let elem = this;
 
-      game.userInput = false;
+      game.inputEnabled = false;
       game.overlay.style.display = 'block';
       game.overlay.onclick = null;
 
@@ -96,7 +96,7 @@ class Actor extends Sprite {
           setTimeout(next, 200);
         } else {
           // Re-enable user input if nothing is happening after the speech.
-          game.userInput = true;
+          game.inputEnabled = true;
         }
       };
       closeBubbleTO = setTimeout(closeBubbleFn, (text.length / 10) * 1500);

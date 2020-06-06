@@ -218,7 +218,7 @@ class Sprite extends HTMLElement {
                 x += Math.cos(this.heading) * Math.round(this.step * $.Game.stepFactor);
                 z += Math.sin(this.heading) * Math.round(this.step * $.Game.stepFactor);
                 
-                if ($.Game.userInput || (this != this.game.ego)) {
+                if (this.game.inputEnabled || (this != this.game.ego)) {
                     // This edge number is simply to stop ego. He won't leave the room.
                     if (z > 667) edge = 10;
                 } else {
@@ -239,7 +239,7 @@ class Sprite extends HTMLElement {
                 if (z < 530) {
                     if (this == this.game.ego) {
                         // We stop user input already and allow the user to walk a bit further.
-                        this.game.userInput = false;
+                        this.game.inputEnabled = false;
                     } else {
                         // Non-ego actor has hit wall.
                         edge = 10;
