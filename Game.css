@@ -1,5 +1,6 @@
 *, *::before, *::after {
   box-sizing: border-box;
+  user-select: none;
 }
 body {
   background: #000;
@@ -11,6 +12,7 @@ body {
   margin: 0px;
   height: 100vh;
   position: relative;
+  cursor: crosshair;
 }
 span {
   display: inline-block;
