@@ -55,21 +55,21 @@ span {
 #controls div {
   float: left;
 }
-#arrows {
+.arrows {
   width: 42px;
 }
-#arrows span {
-  font-size: 45px;
-  height: 67px;
+.arrows span {
+  font-size: 40px;
+  height: 80px;
   width: 40px;
-  line-height: 72px;
+  line-height: 90px;
   text-align: center;
   background-color: #2d2022;
   margin: 1px;
 }
 #items {
-  width: 308px;
-  height: 136px;
+  width: 463px;
+  height: 82px;
   background-color: #2d2022;;
   margin: 1px;
   overflow: hidden;
@@ -80,14 +80,18 @@ span {
   left: 0px;
   padding: 5px 4px 2px 12px;
 }
-#itemlist div {
-  width: 300px;
-  line-height: 25px;
-  font-size: 18px;
+#itemlist span {
+  background-color: #2d2022;
+  width: 75px;
+  margin: 1px;
+  height: 80px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 40px;
 }
 #commands {
-  width: 608px;
-  font-size: 17px;
+  width: 410px;
+  font-size: 0px;
   /* Noto Color Emoji requires installation, so not suitable for js13kgames */
   /* Segoe UI Emoji is Windows font used for emojis */
   font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
@@ -101,7 +105,7 @@ span {
   height: 80px;
   text-align: center;
   line-height: 75px;
-  font-size: 45px;
+  font-size: 40px;
 }
 #wrap {
   /* background-color: #000; */
