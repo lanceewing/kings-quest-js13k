@@ -81,6 +81,7 @@ span {
   position: absolute;
   left: 0px;
   padding: 5px 4px 2px 12px;
+  width: 2000px;
 }
 #itemlist span {
   background-color: #2d2022;
