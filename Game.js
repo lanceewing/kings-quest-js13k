@@ -61,6 +61,11 @@ class Game {
         window.onresize = e => this.resizeScreen(e);
 
         this.userInput.enableInput();
+
+        // Register click event listeners for item list arrow buttons.
+        document.getElementById("up").onclick = e => this.scrollInv(1);
+        document.getElementById("down").onclick = e => this.scrollInv(-1);
+
         this.running = true;
         this.init();
 
@@ -389,11 +394,11 @@ class Game {
      * @param {number} dir
      */
     scrollInv(dir) {
-        let newTop = this.itemTop + (27 * dir);
-        let invCount = $.items.children.length;
-        if ((newTop <= -1) && (newTop > -((invCount - 4) * 27))) {
+        let newTop = this.itemTop + (75 * dir);
+        let invCount = this.items.children.length;
+        if ((newTop <= -1) && (newTop > -((invCount - 4) * 75))) {
             this.itemTop = newTop;
-            this.items.style.top = this.itemTop + 'px';
+            this.items.style.left = this.itemTop + 'px';
         }
     }
 
