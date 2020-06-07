@@ -13,7 +13,10 @@ class Ego extends Actor {
      * @param {Game} game 
      */
     init(game) {
+        super.init(game);
 
+        let egoCanvas = Util.renderEmoji('🚶‍♂️', this.height);
+        this.appendChild(egoCanvas);
     }
 
     /**

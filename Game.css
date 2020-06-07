@@ -49,6 +49,6 @@ main * {
 }
 
 x-ego {
-  --sprite-size: 50px;
-
+  --sprite-width: 50px;
+  --sprite-height: 50px;
 }

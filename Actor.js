@@ -11,14 +11,13 @@ class Actor extends Sprite {
      * Initialises the Actor with a given position.
      * 
      * @param {Game} game 
-     * @param {number} x 
-     * @param {number} y 
-     * @param {number} x 
      */
-    init(game, x, y, z) {
-        super.init(game, x, y, z);
+    init(game) {
+        super.init(game);
 
         //this.canvas = this.buildCanvas();
+
+
     }
   
     /**

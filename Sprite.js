@@ -18,24 +18,23 @@ class Sprite extends HTMLElement {
     /**
      * Initialise the position and size of the Sprite.
      * 
-     * @param {Game} game 
-     * @param {number} x 
-     * @param {number} y 
-     * @param {number} z 
+     * @param {Game} game
      */
-    init(game, x, y, z) {
+    init(game) {
         this.game = game;
 
-        let cssStyle = window.getComputedStyle(this);
-        this.width = cssStyle.getPropertyValue('--sprite-width');
-        this.height = cssStyle.getPropertyValue('--sprite-height');
+        //let cssStyle = window.getComputedStyle(this);
+        //this.width = cssStyle.getPropertyValue('--sprite-width');
+        //this.height = cssStyle.getPropertyValue('--sprite-height');
+        this.width = 50;
+        this.height = 50;
 
         this.moved = false;
         this.positions = [];
-        this.radius = width / 2;
+        this.radius = this.width / 2;
         this.colour = 'grey';
         
-        this.elem.classList.add('sprite');
+        this.classList.add('sprite');
         
         this.cx = 0;
         this.cy = 0;
@@ -55,9 +54,7 @@ class Sprite extends HTMLElement {
         this.destFn = null;
         this.dests = [];
         this.cell = 0;
-
-        this.setPosition(x, y, z);
-        this.visible = true;
+        this.visible = false;
     }
 
     /**
@@ -186,8 +183,8 @@ class Sprite extends HTMLElement {
         }
 
         if (oldFacing != this.facing) {
-            this.elem.classList.remove('facing' + oldFacing);
-            this.elem.classList.add('facing' + this.facing);
+            this.classList.remove('facing' + oldFacing);
+            this.classList.add('facing' + this.facing);
         }
   
         // If the canvas width is greater than the Sprite width, it means that the sprite
@@ -195,7 +192,7 @@ class Sprite extends HTMLElement {
         if (this.canvas && (this.canvas.width > this.width)) {
             // Adjust the background position to show the correct part of the sprite sheet for the direction.
             this.backgroundX = (-((this.facing - 1) * this.width));
-            this.elem.style.backgroundPosition = this.backgroundX + 'px ' + (this.backgroundY + (~~(this.cell/10) * this.height)) + 'px';
+            this.style.backgroundPosition = this.backgroundX + 'px ' + (this.backgroundY + (~~(this.cell/10) * this.height)) + 'px';
         }
     }
   
