@@ -82,6 +82,7 @@ span {
   left: 0px;
   padding: 5px 4px 2px 12px;
   width: 2000px;
+  transition: left 100ms ease-in-out;
 }
 #itemlist span {
   background-color: #2d2022;
@@ -91,6 +92,7 @@ span {
   text-align: center;
   line-height: 75px;
   font-size: 40px;
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
 }
 #commands {
   width: 410px;

@@ -394,9 +394,9 @@ class Game {
      * @param {number} dir
      */
     scrollInv(dir) {
-        let newTop = this.itemTop + (75 * dir);
+        let newTop = this.itemTop + (91 * dir);
         let invCount = this.items.children.length;
-        if ((newTop <= -1) && (newTop > -((invCount - 4) * 75))) {
+        if ((newTop <= -1) && (newTop > -((invCount - 4) * 91))) {
             this.itemTop = newTop;
             this.items.style.left = this.itemTop + 'px';
         }
