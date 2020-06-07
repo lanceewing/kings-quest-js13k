@@ -24,25 +24,29 @@ class Game {
 
     flags = {};
 
+    _gameOver = true;
+
     inputEnabled = false;
 
     /**
      * Constructor for Game.
-     * 
-     * @param {HTMLElement} screen The element in which the game screen will be rendered.
      */
-    constructor(screen) {
-        this.screen = screen;
-        this.overlay = document.createElement('span');
-        this.overlay.id = 'overlay';
-        this.screen.appendChild(this.overlay);
+    constructor() {
+        this.screen = document.getElementById('screen');
+        this.wrap = document.getElementById('wrap');
+        this.overlay = document.getElementById('overlay');
+        this.scoreEl = document.getElementById('score');
+        this.items = document.getElementById('itemlist');
+        this.sentence = document.getElementById('sentence');
+        this.controls = document.getElementById('controls');
+        this.msg = document.getElementById('msg');
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
         this.start();
     }
 
     /**
-     * 
+     * Defines the custom HTML elements that we use in the game.
      */
     defineCustomElements() {
         customElements.define('x-sprite', Sprite);
@@ -101,7 +105,7 @@ class Game {
         this.newRoom();
         
         // Fade in the whole screen at the start.
-        //this.fadeIn(this.wrap);
+        this.fadeIn(this.wrap);
     }
 
     /**
@@ -140,10 +144,10 @@ class Game {
      * @param {UIEvent} The resize event.
      */
     resizeScreen(e) {
-        this.scaleX = window.innerWidth / this.screen.offsetWidth;
-        this.scaleY = window.innerHeight / this.screen.offsetHeight;
-        this.screen.style.setProperty('--scale-x', this.scaleX);
-        this.screen.style.setProperty('--scale-y', this.scaleY);
+        this.scaleX = window.innerWidth / this.wrap.offsetWidth;
+        this.scaleY = window.innerHeight / this.wrap.offsetHeight;
+        this.wrap.style.setProperty('--scale-x', this.scaleX);
+        this.wrap.style.setProperty('--scale-y', this.scaleY);
     }
 
     /**
@@ -190,6 +194,29 @@ class Game {
 
         //this.ego.update(this);
 
+    }
+
+    /**
+     * Adds the given points to the current score.
+     */
+    addToScore(points) {
+        this.score += points;
+        this.scoreEl.innerHTML = '' + this.score + ' of 135';
+    }
+      
+    /**
+     * Processes the current user interaction.
+     */
+    processCommand(e) {
+        if (this.inputEnabled && !this._gameOver) {
+          this.command = $.Logic.process(this.verb, this.command, this.thing, e);
+          //if (e) e.stopPropagation();
+          if (this.command == this.verb) {
+            this.command = this.verb = 'Walk to';
+          }
+        }
+        // TODO: Why didn't I have this here when userInput was disabled?
+        if (e) e.stopPropagation();
     }
 
     /**

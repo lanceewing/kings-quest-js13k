@@ -7,7 +7,40 @@
     <link rel="stylesheet" type="text/css" href="Game.css">
   </head>
   <body>
-    <main></main>
+    <div id="msg">Click to start</div>
+    <div id="wrap">
+      <div id="overlay"></div>
+
+      <div id="status">
+        <span style="width:90px;">&nbsp;Score:</span>
+        <span style="width:210px;" id="score">0 of 158</span>
+        <span style="width:300px;text-align:center;">King's Quest</span>
+      </div>
+
+      <div id="screen">
+      </div>
+
+      <div id="sentence">Walk to</div>
+
+      <div id="controls">
+	      <div id="commands">
+          <span data-name="Walk to">🚶</span>
+          <span data-name="Look at">👁</span>
+          <span data-name="Pick up">🤏</span>
+          <span data-name="Talk to">💬</span>
+          <span data-name="Push">🤚</span>
+	      </div>
+	      <div id="arrows">
+          <span id="up">&#9665;</span>
+          <span id="down">&#9655;</span>
+        </div>
+        <div id="items" class="metal">
+          <div id="itemlist"></div>
+        </div>
+      </div>
+
+    </div>
+
     <script src="Queue.js"></script>
     <script src="Util.js"></script>
     <script src="UserInput.js"></script>
@@ -15,6 +48,6 @@
     <script src="Actor.js"></script>
     <script src="Ego.js"></script>
     <script src="Game.js"></script>
-    <script>onload = () => new Game(document.getElementsByTagName("main")[0]);</script>
+    <script>onload = () => new Game();</script>
   </body>
 </html>

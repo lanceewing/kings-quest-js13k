@@ -4,6 +4,7 @@
 body {
   background: #000;
   color: #B2CDDE;
+  font-size: 24px;
   font-family: courier new;
   overflow: hidden;
   padding: 0px;
@@ -11,18 +12,104 @@ body {
   height: 100vh;
   position: relative;
 }
+span {
+  display: inline-block;
+}
 @media (orientation: landscape) {
 
 }
 @media (orientation: portrait) {
 
 }
-main {
+#overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  display: none;
+}
+#status {
+	background-color: #fff;
+	color: #000;
+	font-weight: bold;
+	height: 27px;
+}
+#sentence {
+  width: 960px;
+  height: 33px;
+  text-align: center;
+  line-height: 33px;
+  color: white;
+  background-color: black;
+}
+#controls {
+  background-color: black;
+  width: 960px;
+  height: 82px;
+  z-index: 1;
+}
+#controls span:hover, #itemlist div:hover {
+  color: hsl(210, 100%, 40%);
+  text-shadow: hsla(210,100%,20%,.3) 0 -1px 0, hsl(210,100%,85%) 0 2px 1px, hsla(200,100%,80%,1) 0 0 5px, hsla(210,100%,50%,.6) 0 0 20px;
+}
+#controls div {
+  float: left;
+}
+#arrows {
+  width: 42px;
+}
+#arrows span {
+  font-size: 45px;
+  height: 67px;
+  width: 40px;
+  line-height: 72px;
+  text-align: center;
+  background-color: #2d2022;
+  margin: 1px;
+}
+#items {
+  width: 308px;
+  height: 136px;
+  background-color: #2d2022;;
+  margin: 1px;
+  overflow: hidden;
+  position: relative;
+}
+#itemlist {
+  position: absolute;
+  left: 0px;
+  padding: 5px 4px 2px 12px;
+}
+#itemlist div {
+  width: 300px;
+  line-height: 25px;
+  font-size: 18px;
+}
+#commands {
+  width: 608px;
+  font-size: 17px;
+  /* Noto Color Emoji requires installation, so not suitable for js13kgames */
+  /* Segoe UI Emoji is Windows font used for emojis */
+  font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+  /* font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; */
+  /* font-family: "Segoe UI Emoji"; */
+}
+#commands span {
+  background-color: #2d2022;
+  width: 80px;
+  margin: 1px;
+  height: 80px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 45px;
+}
+#wrap {
   /* background-color: #000; */
 
   background-image: url(kq1_sms.png);
-  background-size: 8000px 3200px;
-  background-position: -36px -26px;
+  background-size: 8025px 3090px;
+  background-position: -38px 1px;
+  
   /* (995 gaps horiz)
   -1032
   -2027
@@ -33,8 +120,7 @@ main {
   -1084
 
   */
-  clip: rect(0px,960px,503px,0px);
-
+  /* clip: rect(0px,960px,503px,0px); */
   top: 50vh;
   left: 50vw;
   width: 960px;
@@ -44,7 +130,13 @@ main {
   transform: scale3d(var(--scale-x), var(--scale-y), 1)  translate(-50%, -50%);
   transform-origin: 0 0;
 }
-main * {
+#screen {
+  position: relative;
+  height: 485px;
+  z-index: -2;
+  width: 1920px;
+}
+#screen * {
   position: absolute;
 }
 
