@@ -25,8 +25,8 @@ class Game {
       // Other potential settings (not currently used): zindex, colour
       // types: 0 = actor, 1 = item, 2 = prop
 
-      [ 1, 2, 'tree', '🌳', 400, 450, 10, 900, null ],
-      [ 1, 2, 'tree', '🌲', 200, 200, 800, 830, null ],
+      [ 1, 2, 'tree', '🌳', 400, 400, 10, 895, null ],
+      [ 1, 2, 'tree', '🌲', 240, 170, 770, 850, null ],
 
     ];
 
