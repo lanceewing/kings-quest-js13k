@@ -20,7 +20,13 @@ class Game {
         []
     ];
 
-    props = [];
+    props = [
+      // Room#, type, name, width, height, x, y, element reference, unique?
+      // Other potential settings (not currently used): zindex, colour
+      // types: 0 = actor, 1 = item, 2 = prop
+
+
+    ];
 
     flags = {};
 
@@ -101,7 +107,7 @@ class Game {
   
         // Create Ego (the main character) and add it to the screen.
         this.ego = document.createElement('x-ego');
-        this.ego.init(this);
+        this.ego.init(this, 50, 50);
         this.ego.setPosition(234, 0, 600);
         this.ego.nesw = 1;
         this.screen.appendChild(this.ego);
@@ -271,22 +277,17 @@ class Game {
             // Switch on the type of prop
             switch (prop[1]) {
                 case 0: // Actor
-                    switch (prop[2]) {
-                        case 'pod':
-                            obj = new Actor(prop[3], prop[4], 'black', 0.95, 10, 'black');
-                            obj.setDirection(Sprite.OUT);
-                            break;
-                    }
-                    obj.setPosition(prop[5], 0, prop[6]);
                     break;
 
                 case 1: // Item
-                    obj = new Obj(prop[3], prop[4], prop[8]);
+                    obj = new Sprite();
+                    obj.init(this, prop[3], prop[4]);
                     obj.item = true;
                     break;
 
                 case 2: // Prop
-                    obj = new Obj(prop[3], prop[4], prop[8]);
+                    obj = new Sprite();
+                    obj.init(this, prop[3], prop[4]);
                     break;
             }
 

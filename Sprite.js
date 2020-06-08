@@ -19,15 +19,13 @@ class Sprite extends HTMLElement {
      * Initialise the position and size of the Sprite.
      * 
      * @param {Game} game
+     * @param {number} width 
+     * @param {number} height 
      */
-    init(game) {
+    init(game, width, height) {
         this.game = game;
-
-        //let cssStyle = window.getComputedStyle(this);
-        //this.width = cssStyle.getPropertyValue('--sprite-width');
-        //this.height = cssStyle.getPropertyValue('--sprite-height');
-        this.width = 50;
-        this.height = 50;
+        this.width = width;
+        this.height = height;
 
         this.moved = false;
         this.positions = [];

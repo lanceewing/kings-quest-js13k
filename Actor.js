@@ -12,8 +12,8 @@ class Actor extends Sprite {
      * 
      * @param {Game} game 
      */
-    init(game) {
-        super.init(game);
+    init(game, width, height) {
+        super.init(game, width, height);
 
         //this.canvas = this.buildCanvas();
 
