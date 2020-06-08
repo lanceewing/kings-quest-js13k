@@ -21,18 +21,25 @@ class Sprite extends HTMLElement {
      * @param {Game} game
      * @param {number} width 
      * @param {number} height 
+     * @param {string} content
      */
-    init(game, width, height) {
+    init(game, width, height, content) {
         this.game = game;
+
         this.width = width;
         this.height = height;
+        this.style.width = width + 'px';
+        this.style.height = height + 'px';
+
+        // If we were given content then add it.
+        if (content) {
+            this.appendChild(Util.renderEmoji(content, this.height));
+        }
 
         this.moved = false;
         this.positions = [];
         this.radius = this.width / 2;
         this.colour = 'grey';
-        
-        this.classList.add('sprite');
         
         this.cx = 0;
         this.cy = 0;

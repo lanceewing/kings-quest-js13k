@@ -148,8 +148,10 @@ span {
 #screen * {
   position: absolute;
 }
-
 x-ego {
-  --sprite-width: 50px;
-  --sprite-height: 50px;
+
+}
+x-sprite canvas {
+  width: 100%;
+  height: 100%;
 }
