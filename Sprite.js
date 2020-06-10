@@ -33,7 +33,7 @@ class Sprite extends HTMLElement {
 
         // If we were given content then add it.
         if (content) {
-            this.appendChild(Util.renderEmoji(content, this.height));
+            this.appendChild(Util.renderEmoji(content, Math.max(this.width, this.height)));
         }
 
         this.moved = false;
