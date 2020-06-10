@@ -156,3 +156,10 @@ x-sprite canvas {
   height: 100%;
   /* image-rendering: pixelated; */
 }
+.dark {
+  filter: brightness(0.4) saturate(3);
+}
+.light {
+  filter: brightness(1.3) saturate(1.5);
+}
+

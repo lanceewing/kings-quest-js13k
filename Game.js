@@ -23,20 +23,20 @@ class Game {
     props = [
       // Room#, type, name, content, width, height, x, y, element reference
       // Other potential settings (not currently used): zindex, colour
-      // types: 0 = actor, 1 = item, 2 = prop
+      // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop
 
       [ 1, 2, 'tree', '🌳', 400, 400, 10, 895, null ],
-      [ 1, 2, 'tree', '🌲', 240, 170, 770, 850, null ],
-      [ 1, 2, 'tree', '🌲', 230, 150, 700, 830, null ],
+      [ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
+      [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
       [ 1, 2, 'tree', '🌳', 230, 75, 460, 630, null ],
-      [ 1, 2, 'tree', '🌲', 230, 130, 580, 605, null ],
-      [ 1, 2, 'tree', '🌲', 230, 150, 500, 610, null ],
-      [ 1, 2, 'tree', '🌲', 180, 70, 810, 380, null ],
+      [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
+      [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
+      [ 1, 4, 'tree', '🌲', 180, 70, 810, 380, null ],
       [ 1, 2, 'tree', '🌲', 180, 90, 740, 385, null ],
-      [ 1, 2, 'tree', '🌲', 180, 70, 550, 385, null ],
+      [ 1, 4, 'tree', '🌲', 180, 70, 550, 385, null ],
       [ 1, 2, 'tree', '🌲', 180, 90, 480, 390, null ],
-      [ 1, 2, 'tree', '🌲', 180, 110, 300, 810, null ],
-      [ 1, 2, 'tree', '🌳', 180, 50, 280, 820, null ],
+      [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
+      [ 1, 4, 'tree', '🌳', 180, 50, 280, 820, null ],
 
     ];
 
@@ -302,9 +302,18 @@ class Game {
                     break;
 
                 case 2: // Prop
+                case 3:
+                case 4:
                     obj = new Sprite();
                     obj.init(this, prop[4], prop[5], prop[3]);
                     break;
+            }
+
+            if (prop[1] == 3) {
+                obj.classList.add('light');
+            }
+            if (prop[1] == 4) {
+                obj.classList.add('dark');
             }
 
             let name = prop[2];
