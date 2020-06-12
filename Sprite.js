@@ -30,6 +30,7 @@ class Sprite extends HTMLElement {
         this.height = height;
         this.style.width = width + 'px';
         this.style.height = height + 'px';
+        this.style.setProperty('--sprite-width', width + 'px');
 
         // If we were given content then add it.
         if (content) {

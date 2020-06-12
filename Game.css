@@ -113,7 +113,9 @@ span {
   font-size: 40px;
 }
 #wrap {
-  /* background-color: #000; */
+  background-color: #31da81;
+
+  background: linear-gradient(blue 0% 2.5%, #008eff 2.5% 4%, #31da81 4% 100%);
 
   background-image: url(kq1_sms.png);
   background-size: 8025px 3090px;
@@ -155,6 +157,18 @@ x-sprite canvas {
   width: 100%;
   height: 100%;
   /* image-rendering: pixelated; */
+}
+x-sprite::before {
+  content: "";
+  position: absolute;
+  bottom: calc(var(--sprite-width)/-10);
+  left: 0px;
+  width: var(--sprite-width);
+  height: calc(var(--sprite-width)/5);
+  background: #000;
+  border-radius: 50%;
+  opacity: 0.4;
+  filter: blur(1.5px);
 }
 .dark {
   filter: brightness(0.4) saturate(3);
