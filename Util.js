@@ -42,7 +42,7 @@ class Util {
      * @returns The created canvas with the rendered emoji text at the given font size.
      */
     static renderEmoji(emojiText, size) {
-        let fontDef = `${size}px serif`;
+        let fontDef = `${size}px Segoe UI Emoji`;
         let canvas = document.createElement('canvas');
         let ctx = canvas.getContext('2d');
         ctx.font = fontDef;
