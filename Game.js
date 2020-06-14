@@ -125,8 +125,8 @@ class Game {
   
         // Create Ego (the main character) and add it to the screen.
         this.ego = document.createElement('x-ego');
-        this.ego.init(this, 50, 50);
-        this.ego.setPosition(234, 0, 600);
+        this.ego.init(this, 50, 150);
+        this.ego.setPosition(434, 0, 600);
         this.ego.nesw = 1;
         this.screen.appendChild(this.ego);
   
@@ -196,7 +196,7 @@ class Game {
 
 
 
-        this.userInput.processUserInput();
+        this.userInput.processUserInput(this.ego);
     }
 
     /**

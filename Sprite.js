@@ -176,6 +176,7 @@ class Sprite extends HTMLElement {
      */
     setDirection(direction) {
         let oldFacing = this.facing;
+        let facing = 0;
 
         if (direction && direction != this.direction) {
             this.directionLast = this.direction;
@@ -183,9 +184,16 @@ class Sprite extends HTMLElement {
         
             // Convert the direction to a facing direction by shifting right until we find
             // a 1. There are only four facing directions.
-            for (let facing = 0; facing <= 4 && !((direction >> facing++) & 1););
+            for (facing = 0; facing <= 4 && !((direction >> facing++) & 1););
             
             this.facing = facing;
+        }
+
+        // Convert the direction into a heading, but only if LEFT, RIGHT, IN, or OUT are set.
+        if (direction & 0x0F) {
+            this.heading = Util.dirToHeading(direction);
+        } else {
+            this.heading = null;
         }
 
         if (oldFacing != this.facing) {

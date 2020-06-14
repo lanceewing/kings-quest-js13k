@@ -115,7 +115,7 @@ span {
 #wrap {
   background-color: #31da81;
 
-  background: linear-gradient(#265D96,#B2CDDE, #B2CDDE 4% 4%,#31da81 4% 4%, #31da81 4% 100%);
+  background: linear-gradient(#265D96,#B2CDDE, #B2CDDE 5% 5%, #31da81 5% 100%);
 
   background-image: url(kq1_sms.png);
   background-size: 8025px 3090px;
@@ -151,7 +151,7 @@ span {
   position: absolute;
 }
 x-ego {
-
+  overflow: hidden;
 }
 x-sprite canvas {
   width: 100%;

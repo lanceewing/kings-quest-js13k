@@ -179,14 +179,40 @@ class UserInput {
   }
 
   /**
+   * Tests if the left button is being held down.
+   */
+  left() {
+    return (this.joystick & UserInput.LEFT);
+  }
+
+  /**
+   * Tests if the right button is being held down.
+   */
+  right() {
+    return (this.joystick & UserInput.RIGHT);
+  }
+
+  /**
+   * Tests if the up button is being held down.
+   */
+  up() {
+    return (this.joystick & UserInput.UP);
+  }
+
+  /**
+   * Tests if the down button is being held down.
+   */
+  down() {
+    return (this.joystick & UserInput.DOWN);
+  }
+
+  /**
    * @param {Ego} ego The player Ego instance.
    */
   processUserInput(ego) {
     // Process any user input for the main player sprite (ego).
     if (ego) {
-
-
-
+      ego.processUserInput();
     }
 
     // Keep track of what the previous state of each key was.
