@@ -66,6 +66,7 @@ class Game {
         this.msg = document.getElementById('msg');
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
+        this.logic = new Logic(this);
         this.start();
     }
 
@@ -238,7 +239,7 @@ class Game {
      */
     processCommand(e) {
         if (this.inputEnabled && !this._gameOver) {
-          this.command = $.Logic.process(this.verb, this.command, this.thing, e);
+          this.command = this.logic.process(this.verb, this.command, this.thing, e);
           //if (e) e.stopPropagation();
           if (this.command == this.verb) {
             this.command = this.verb = 'Walk to';
