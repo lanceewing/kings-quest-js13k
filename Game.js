@@ -218,12 +218,46 @@ class Game {
     }
 
     /**
-     * 
+     * The main method invoked on every animation frame when the game is unpaused. It 
+     * interates through all of the Sprites and invokes their update method. The update
+     * method will invoke the move method if the calculated position has changed. This
+     * method then tests if the Sprite is touching another Sprite. If it is, it invokes
+     * the hit method on both Sprites. 
      */
     updateObjects() {
 
-        //this.ego.update(this);
+        this.ego.update();
 
+
+        // let i=-1, j, a1=$.ego, a2;
+        // let objsLen = this.objs.length;
+    
+        // // Iterate over all of the Sprites in the current room, invoking update on each on.
+        // for (;;) {
+        //   if (a1) {
+        //     a1.update();
+    
+        //     // Check if the Sprite is touching another Sprite.
+        //     for (j = i + 1; j < objsLen; j++) {
+        //       a2 = this.objs[j];
+        //       if (a2 && a1.touching(a2)) {
+        //         // If it is touching, then invoke hit on both Sprites. They might take 
+        //         // different actions in response to the hit.
+        //         a1.hit(a2);
+        //         a2.hit(a1);
+        //       }
+        //     }
+            
+        //     // Clears the Sprite's moved flag, which is only of use to the hit method.
+        //     a1.moved = false;
+        //   }
+          
+        //   if (++i < objsLen) {
+        //     a1 = this.objs[i];
+        //   } else {
+        //     break;
+        //   }
+        // }
     }
 
     /**

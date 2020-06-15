@@ -36,17 +36,21 @@ class Ego extends Actor {
         let userInput = this.game.userInput;
         
         // Check if the direction keys are pressed and adjust Ego's direction accordingly.
-        if (userInput.left() && !(this.direction & Sprite.RIGHT)) {
+        if (userInput.left() && !userInput.right()) {
             direction |= Sprite.LEFT;
         }
-        else if (userInput.right() && !(this.direction & Sprite.LEFT)) {
+        if (userInput.right() && !userInput.left()) {
             direction |= Sprite.RIGHT;
         }
-        if (userInput.up() && !(this.direction & Sprite.OUT)) {
+        if (userInput.up() && !userInput.down()) {
             direction |= Sprite.IN;
         }
-        else if (userInput.down() && !(this.direction & Sprite.IN)) {
+        if (userInput.down() && !userInput.up()) {
             direction |= Sprite.OUT;
+        }
+
+        if (direction) {
+            this.cell = ((this.cell + 1) % 30);
         }
         
         // Update Ego's direction to what was calculated above. The move method will use this 

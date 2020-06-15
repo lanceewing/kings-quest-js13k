@@ -206,7 +206,9 @@ class Sprite extends HTMLElement {
         if (this.canvas && (this.canvas.width > this.width)) {
             // Adjust the background position to show the correct part of the sprite sheet for the direction.
             this.backgroundX = (-((this.facing - 1) * this.width));
-            this.style.backgroundPosition = this.backgroundX + 'px ' + (this.backgroundY + (~~(this.cell/10) * this.height)) + 'px';
+            this.backgroundY = (-(~~(this.cell/10) * this.height));
+            this.canvas.style.left = this.backgroundX + 'px';
+            this.canvas.style.top = this.backgroundY + 'px';
         }
     }
   
@@ -226,8 +228,8 @@ class Sprite extends HTMLElement {
             
             // Move the position based on the current heading, step size and time delta.
             if (this.heading != null) {
-                x += Math.cos(this.heading) * Math.round(this.step * $.Game.stepFactor);
-                z += Math.sin(this.heading) * Math.round(this.step * $.Game.stepFactor);
+                x += Math.cos(this.heading) * Math.round(this.step * this.game.stepFactor);
+                z += Math.sin(this.heading) * Math.round(this.step * this.game.stepFactor);
                 
                 if (this.game.inputEnabled || (this != this.game.ego)) {
                     // This edge number is simply to stop ego. He won't leave the room.

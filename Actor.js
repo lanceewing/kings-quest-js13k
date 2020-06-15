@@ -14,8 +14,6 @@ class Actor extends Sprite {
    */
   init(game, width, height, content) {
     super.init(game, width, height, content);
-
-    //super(50, 150, 'grey', 0.95, 5, 'white', 'grey', 'red');
     
     this.colour = 'grey';
     this.hat = 'grey';
