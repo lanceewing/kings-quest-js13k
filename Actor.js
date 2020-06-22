@@ -21,9 +21,9 @@ class Actor extends Sprite {
     this.pack = 'red';
 
     this.canvas = this.buildCanvas();
-
-    this.appendChild(this.canvas);
-
+    this.wrap.appendChild(this.canvas);
+    this.shadow = document.createElement('x-shadow');
+    this.appendChild(this.shadow);
   }
 
   /**

@@ -31,10 +31,15 @@ class Sprite extends HTMLElement {
         this.style.width = width + 'px';
         this.style.height = height + 'px';
         this.style.setProperty('--sprite-width', width + 'px');
+    
+        this.wrap = document.createElement('x-wrap');
+        this.wrap.style.width = width + 'px';
+        this.wrap.style.height = height + 'px';
+        this.appendChild(this.wrap);
 
         // If we were given content then add it.
         if (content) {
-            this.appendChild(Util.renderEmoji(content, Math.max(this.width, this.height)));
+            this.wrap.appendChild(Util.renderEmoji(content, Math.max(this.width, this.height)));
         }
 
         this.moved = false;
@@ -233,9 +238,9 @@ class Sprite extends HTMLElement {
                 
                 if (this.game.inputEnabled || (this != this.game.ego)) {
                     // This edge number is simply to stop ego. He won't leave the room.
-                    if (z > 667) edge = 10;
+                    if (z > 950) edge = 10;
                 } else {
-                    if (z > 740) {
+                    if (z > 1940) {
                         if (x < 80) {
                             edge = 2;   // Left path
                         } else if (x > 1740) {
