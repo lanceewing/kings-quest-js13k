@@ -140,6 +140,7 @@ span {
   overflow: hidden;
   transform: scale3d(var(--scale-x), var(--scale-y), 1)  translate(-50%, -50%);
   transform-origin: 0 0;
+  opacity: 0;
 }
 #screen {
   position: relative;
