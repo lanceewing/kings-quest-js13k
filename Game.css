@@ -157,12 +157,17 @@ x-wrap {
   top: 0px;
 }
 x-shadow {
+  --shadow-width: var(--sprite-width);
+  --shadow-height: calc(var(--sprite-width)/2);
   content: "";
   position: absolute;
-  bottom: -5px;
+  bottom: calc(var(--shadow-height)/-2);
   left: 0px;
-  width: 50px;
-  height: 10px;
+  /*width: 50px;*/
+  width: var(--shadow-width);
+  /*height: 25px;*/ /*10px;*/
+  /*height: calc(var(--sprite-width)/2);*/
+  height: var(--shadow-height);
   background: #000;
   border-radius: 50%;
   opacity: 0.5;
@@ -173,6 +178,7 @@ x-sprite canvas {
   height: 100%;
   /* image-rendering: pixelated; */
 }
+/*
 .tree::before {
   content: "";
   position: absolute;
@@ -180,11 +186,13 @@ x-sprite canvas {
   left: 0px;
   width: var(--sprite-width);
   height: calc(var(--sprite-width)/5);
+  height: calc(var(--sprite-width)/2);
   background: #000;
   border-radius: 50%;
   opacity: 0.4;
   filter: blur(1.5px);
 }
+*/
 .dark {
   filter: brightness(0.4) saturate(3);
 }

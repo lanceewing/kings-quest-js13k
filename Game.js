@@ -26,18 +26,18 @@ class Game {
       // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop
 
       // Room 1
-      [ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
-      [ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
-      [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
-      [ 1, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
-      [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
-      [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
-      [ 1, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
-      [ 1, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
-      [ 1, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
-      [ 1, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
-      [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
-      [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
+      //[ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
+      //[ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
+    //   [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
+       [ 1, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
+    //   [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
+    //   [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
+    //   [ 1, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
+    //   [ 1, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
+    //   [ 1, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
+    //   [ 1, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
+    //   [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
+    //   [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
 
       [ 1, 2, 'cloud', '☁', 200, 50, 50, 130, null ],
       [ 1, 2, 'cloud', '☁', 200, 50, 450, 130, null ],
@@ -129,7 +129,7 @@ class Game {
         // Create Ego (the main character) and add it to the screen.
         this.ego = document.createElement('x-ego');
         this.ego.init(this, 50, 150);
-        this.ego.setPosition(434, 0, 600);
+        this.ego.setPosition(550, 0, 850);
         this.ego.nesw = 1;
         this.screen.appendChild(this.ego);
   

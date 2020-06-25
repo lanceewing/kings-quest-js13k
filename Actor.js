@@ -22,8 +22,8 @@ class Actor extends Sprite {
 
     this.canvas = this.buildCanvas();
     this.wrap.appendChild(this.canvas);
-    this.shadow = document.createElement('x-shadow');
-    this.appendChild(this.shadow);
+    //this.shadow = document.createElement('x-shadow');
+    //this.appendChild(this.shadow);
   }
 
   /**
@@ -42,8 +42,6 @@ class Actor extends Sprite {
           c * this.width * 3);
       }
     }
-
-    //this.style.backgroundImage = 'url(' + ctx.canvas.toDataURL("image/png") + ')';
 
     return ctx.canvas;
   }
