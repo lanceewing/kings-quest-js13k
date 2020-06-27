@@ -23,7 +23,7 @@ class Game {
     props = [
       // Room#, type, name, content, width, height, x, y, element reference
       // Other potential settings (not currently used): zindex, colour
-      // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop
+      // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop, 5 = no shadow prop
 
       // Room 1
       //[ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
@@ -39,8 +39,8 @@ class Game {
     //   [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
     //   [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
 
-      [ 1, 2, 'cloud', '☁', 200, 50, 50, 130, null ],
-      [ 1, 2, 'cloud', '☁', 200, 50, 450, 130, null ],
+      [ 1, 5, 'cloud', '☁', 200, 50, 50, 130, null ],
+      [ 1, 5, 'cloud', '☁', 200, 50, 450, 130, null ],
 
       // Room 2
 
@@ -346,6 +346,11 @@ class Game {
                     obj = new Sprite();
                     obj.init(this, prop[4], prop[5], prop[3]);
                     break;
+
+                case 5:
+                    obj = new Sprite();
+                    obj.init(this, prop[4], prop[5], prop[3], false);
+                    false;
             }
 
             if (prop[1] == 3) {

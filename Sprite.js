@@ -22,8 +22,9 @@ class Sprite extends HTMLElement {
      * @param {number} width 
      * @param {number} height 
      * @param {string} content
+     * @param {boolean} shadow 
      */
-    init(game, width, height, content) {
+    init(game, width, height, content, shadow=true) {
         this.game = game;
 
         this.width = width;
@@ -44,9 +45,11 @@ class Sprite extends HTMLElement {
             this.wrap.appendChild(this.canvas);
         }
 
-        this.shadow = document.createElement('x-shadow');
-        this.shadow.style.zIndex = 0;
-        this.appendChild(this.shadow);
+        if (shadow) {
+            this.shadow = document.createElement('x-shadow');
+            this.shadow.style.zIndex = 0;
+            this.appendChild(this.shadow);
+        }
 
         this.moved = false;
         this.positions = [];
