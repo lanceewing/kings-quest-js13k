@@ -75,142 +75,27 @@ class Sprite extends HTMLElement {
         this.cell = 0;
         this.visible = false;
     }
-
-    touching5(obj) {
-        // Width and Height is the shadow dimensions.
-        let w = this.width;
-        let h = this.width / 5;
-        let a = w / 2;
-        let b = h / 2;
-        let h2 = obj.width / 5;
-        
-        let dx = obj.cx - this.cx;
-        let dz = Math.abs((this.z - (h/2)) - (obj.z - (h2/2))) + 15
-
-        return ((dx*dx)/(a*a)+(dz*dz)/(b*b)<=1);
-    }
-
-    /**
-     * Tests whether the given Sprite is touching this Sprite. There is an optional gap 
-     * parameter, which provides more of a "close too" check rather than actually touching.
-     *
-     * @param {Sprite} obj Another Sprite with which to test whether this Sprite is touching it.
-     * @param {number} gap If provided, then if the two Sprites are within this distance, the method returns true.
-     * 
-     * @returns {boolean} true if this Sprite is touching the given Sprite; otherwise false.
-     */
-    touching2(obj, gap) {
-        // Some objects are not solid, e.g. ghosts.
-        if (this.ignore || obj.ignore) {
-            return false;
-        }
-        if (obj) {
-            let dx = this.cx - obj.cx;
-            let dy = (this.cy - obj.cy);
-            let dz = Math.abs(this.z - obj.z) + 15;
-            let dist = (dx * dx) + (dy * dy) + (dz * dz);
-            let rsum = (this.radius + obj.radius + (gap | 0));
-            return (dist <= (rsum * rsum));
-        } else {
-            return false;
-        }
-    }
  
     /**
      * 
      * 
-     * @param {*} obj 
-     * @param {*} gap 
+     * @param {*} obj
      */
-    touching(obj, gap) {
+    touching(obj) {
         // Some objects are not solid, e.g. ghosts.
         if (this.ignore || obj.ignore) {
             return false;
         }
         if (obj) {
             let dx = this.cx - obj.cx;
-            let dz = this.z - obj.z;
+            let dz = this.cz - obj.cz;
             let dist = (dx * dx) + (dz * dz);
             let rsum = (this.radius + obj.radius);
             return (dist <= (rsum * rsum));
-
-            // (x2-x1)^2 + (y1-y2)^2 <= (r1+r2)^2
         } else {
             return false;
         }
     }
-
-    /**
-     * Tests whether the given Sprite is touching this Sprite.
-     *
-     * @param {Sprite} obj Another Sprite with which to test whether this Sprite is touching it.
-     * 
-     * @returns {boolean} true if this Sprite is touching the given Sprite; othewise false.
-     */
-    touching3(obj) {
-        // Normalize the rectangular coordinates compared to the ellipse
-        // having a center at 0,0 and a radius of 0.5.
-        let normx0 = (obj.x - this.x) / this.width - 0.5;
-        let normx1 = normx0 + obj.width / this.width;
-        let normz0 = (obj.z - this.z) / this.height - 0.5;
-        let normz1 = normz0 + obj.height / this.height;
-        // find nearest x (left edge, right edge, 0.0)
-        // find nearest y (top edge, bottom edge, 0.0)
-        // if nearest x,y is inside circle of radius 0.5, then intersects
-        let nearx, nearz;
-        if (normx0 > 0.0) {
-            // center to left of X extents
-            nearx = normx0;
-        } else if (normx1 < 0.0) {
-            // center to right of X extents
-            nearx = normx1;
-        } else {
-            nearx = 0.0;
-        }
-        if (normz0 > 0.0) {
-            // center above Y extents
-            nearz = normz0;
-        } else if (normz1 < 0.0) {
-            // center below Y extents
-            nearz = normz1;
-        } else {
-            nearz = 0.0;
-        }
-        return (nearx * nearx + nearz * nearz) < 0.25;
-    }
-
-    touching4(obj) {
-        // Normalize the rectangular coordinates compared to the ellipse
-        // having a center at 0,0 and a radius of 0.5.
-        let normx0 = (obj.x - this.x) / this.width - 0.5;
-        let normx1 = normx0 + obj.width / this.width;
-        let normy0 = (obj.y - this.y) / this.height - 0.5;
-        let normy1 = normy0 + obj.height / this.height;
-        // find nearest x (left edge, right edge, 0.0)
-        // find nearest y (top edge, bottom edge, 0.0)
-        // if nearest x,y is inside circle of radius 0.5, then intersects
-        let nearx, neary;
-        if (normx0 > 0.0) {
-            // center to left of X extents
-            nearx = normx0;
-        } else if (normx1 < 0.0) {
-            // center to right of X extents
-            nearx = normx1;
-        } else {
-            nearx = 0.0;
-        }
-        if (normy0 > 0.0) {
-            // center above Y extents
-            neary = normy0;
-        } else if (normy1 < 0.0) {
-            // center below Y extents
-            neary = normy1;
-        } else {
-            neary = 0.0;
-        }
-        return (nearx * nearx + neary * neary) < 0.25;
-    }
-
     /**
      * Resets this Sprite's position to its previous position.
      */
@@ -253,11 +138,13 @@ class Sprite extends HTMLElement {
         this.z = z;
         this.cx = x + this.radius;
         this.cy = y + this.radius;
+        this.cz = z * 3;
     
         // Update the style of the sprite to reflect the new position.
         let top = Math.floor(this.z / 2) - this.height - Math.floor(this.y);
         this.style.top = top + 'px';
         this.style.left = (this.x) + 'px';
+
         this.style.zIndex = Math.floor(this.z);
         this.canvas.style.zIndex = Math.floor(this.z);
     }
@@ -353,22 +240,22 @@ class Sprite extends HTMLElement {
                 x += Math.cos(this.heading) * Math.round(this.step * this.game.stepFactor);
                 z += Math.sin(this.heading) * Math.round(this.step * this.game.stepFactor);
                 
-                if (this.game.inputEnabled || (this != this.game.ego)) {
-                    // This edge number is simply to stop ego. He won't leave the room.
-                    if (z > 950) edge = 10;
-                } else {
-                    if (z > 1940) {
-                        if (x < 80) {
-                            edge = 2;   // Left path
-                        } else if (x > 1740) {
-                            edge = 5;   // Right path
-                        } else if (x > 960) {
-                            edge = 7;   // Right door down
-                        } else {
-                            edge = 8;   // Left door down.
-                        }
-                    }
-                }
+                // if (this.game.inputEnabled || (this != this.game.ego)) {
+                //     // This edge number is simply to stop ego. He won't leave the room.
+                //     if (z > 950) edge = 10;
+                // } else {
+                //     if (z > 1940) {
+                //         if (x < 80) {
+                //             edge = 2;   // Left path
+                //         } else if (x > 1740) {
+                //             edge = 5;   // Right path
+                //         } else if (x > 960) {
+                //             edge = 7;   // Right door down
+                //         } else {
+                //             edge = 8;   // Left door down.
+                //         }
+                //     }
+                // }
                 
                 // Check whether ego has walked to a door or path..
                 if (z < 330) {

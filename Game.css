@@ -158,7 +158,7 @@ x-wrap {
 }
 x-shadow {
   --shadow-width: var(--sprite-width);
-  --shadow-height: calc(var(--sprite-width)/2);
+  --shadow-height: calc(var(--sprite-width)/2/3);
   content: "";
   position: absolute;
   bottom: calc(var(--shadow-height)/-2);
