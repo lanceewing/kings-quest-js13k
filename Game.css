@@ -207,20 +207,83 @@ x-sprite canvas {
   left: 12px;
 }
 .body {
-  width: 33px;
-  background-color: #2e6fa9a1;
-  height: 76px;
-  top: 38px;
-  left: 9px;
-  transform: perspective(2px) rotateX(1deg);
-  border: solid 3px black;
-  border-bottom-width: 1px;
+  position: relative;
+  border-bottom: 86px solid black;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  height: 0;
+  width: 49px;
+  top: 47px;
+}
+.body:after {
+  content: "";
+  position: absolute;
+  border-bottom: 81px solid grey;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  height: 0;
+  width: 41px;
+  top: 3px;
+  left: -11px;
+}
+.feet {
+  top: 114px;
+  height: 20px;
+  z-index: -1;
+}
+.feet:before {
+  content: "";
+  width: 3.5px;
+  height: 20px;
+  background-color: black;
+  position: absolute;
+  bottom: -5px;
+  left: 15px;
+  animation: feet 0.3s ease-out infinite alternate-reverse;
+  animation-play-state: paused;
+}
+.feet:after {
+  content: "";
+  width: 3.5px;
+  height: 20px;
+  background-color: black;
+  position: absolute;
+  bottom: -5px;
+  left: 31.5px;
+  animation: feet 0.3s ease-out infinite alternate;
+  animation-play-state: paused;
+}
+.walking .feet:before, .walking .feet:after {
+  animation-play-state: running;
+}
+@keyframes feet {
+  0% {
+    bottom: -5px;
+  }
+  90% {
+    bottom: -15px;
+  }
+  100% {
+    bottom: -15px;
+  }
 }
 .pack {
   width: 40px;
-  height: 42px;
+  height: 44px;
   background-color: red;
-  top: 52px;
+  top: 51px;
   left: 5px;
   border: solid 3px black;
+}
+.facing2 .pack {
+  z-index: -1;
+  width: 20px;
+} 
+.facing1 .pack {
+  z-index: -1;
+  width: 20px;
+  left: 25px;
+}
+.facing4 .pack {
+  z-index: -1;
 }

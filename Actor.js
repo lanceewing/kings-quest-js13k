@@ -15,37 +15,15 @@ class Actor extends Sprite {
   init(game, width, height, content) {
     super.init(game, width, height, content);
     
+    // TODO: This is only applicable for Ego.
     this.colour = 'grey';
     this.hat = 'grey';
     this.face = 'white';
     this.pack = 'red';
 
-    this.canvas = this.buildCanvas();
-    this.wrap.appendChild(this.canvas);
-
-    let person = document.importNode(document.getElementById('person').content, true);
-    this.appendChild(person);
-  }
-
-  /**
-   * Builds the background image canvas for the Actor. 
-   */
-  buildCanvas() {
-    // Create a single canvas to render the sprite sheet for the four directions.
-    let ctx = Util.create2dContext(this.width * 4, this.width * 3 * 3);
-
-    // For each direction, render the Actor facing in that direction.
-    for (let c = 0; c < 3; c++) {
-      for (let d = 0; d < 4; d++) {
-        ctx.clearRect(d * this.width, c * this.width * 3 - 1, this.width, this.width * 3 + 1);
-        ctx.drawImage(
-          Util.renderPerson(this.width, this.width * 3, d, c, this.face, this.colour, this.hat, this.pack, this.outline),
-          d * this.width,
-          c * this.width * 3);
-      }
-    }
-
-    return ctx.canvas;
+    // An HTML template is used for the structure of the actor.
+    this.appendChild(document.importNode(document.getElementById('person').content, true));
+    this.canvas = this.getElementsByClassName('actor')[0];
   }
 
   /**
@@ -176,6 +154,12 @@ class Actor extends Sprite {
 
       // Move Ego based on it's heading.
       if (this.heading !== null) this.move();
+
+      if (this.moved) {
+        this.classList.add('walking');
+      } else {
+        this.classList.remove('walking');
+      }
     }
   }
 

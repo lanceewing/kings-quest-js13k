@@ -146,7 +146,9 @@ class Sprite extends HTMLElement {
         this.style.left = (this.x) + 'px';
 
         this.style.zIndex = Math.floor(this.z);
-        this.canvas.style.zIndex = Math.floor(this.z);
+        if (this.canvas) {
+            this.canvas.style.zIndex = Math.floor(this.z);
+        }
     }
 
     /**
