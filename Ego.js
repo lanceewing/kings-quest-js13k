@@ -14,9 +14,6 @@ class Ego extends Actor {
      */
     init(game, width, height, content) {
         super.init(game, width, height, content);
-
-        //let egoCanvas = Util.renderEmoji('🚶‍♂️', this.height);
-        //this.appendChild(egoCanvas);
     }
 
     /**

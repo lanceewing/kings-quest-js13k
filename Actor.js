@@ -22,8 +22,9 @@ class Actor extends Sprite {
 
     this.canvas = this.buildCanvas();
     this.wrap.appendChild(this.canvas);
-    //this.shadow = document.createElement('x-shadow');
-    //this.appendChild(this.shadow);
+
+    let person = document.importNode(document.getElementById('person').content, true);
+    this.appendChild(person);
   }
 
   /**
@@ -36,6 +37,7 @@ class Actor extends Sprite {
     // For each direction, render the Actor facing in that direction.
     for (let c = 0; c < 3; c++) {
       for (let d = 0; d < 4; d++) {
+        ctx.clearRect(d * this.width, c * this.width * 3 - 1, this.width, this.width * 3 + 1);
         ctx.drawImage(
           Util.renderPerson(this.width, this.width * 3, d, c, this.face, this.colour, this.hat, this.pack, this.outline),
           d * this.width,

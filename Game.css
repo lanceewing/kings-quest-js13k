@@ -159,14 +159,10 @@ x-wrap {
 x-shadow {
   --shadow-width: var(--sprite-width);
   --shadow-height: calc(var(--sprite-width)/2/3);
-  content: "";
   position: absolute;
   bottom: calc(var(--shadow-height)/-2);
   left: 0px;
-  /*width: 50px;*/
   width: var(--shadow-width);
-  /*height: 25px;*/ /*10px;*/
-  /*height: calc(var(--sprite-width)/2);*/
   height: var(--shadow-height);
   background: #000;
   border-radius: 50%;
@@ -178,21 +174,6 @@ x-sprite canvas {
   height: 100%;
   /* image-rendering: pixelated; */
 }
-/*
-.tree::before {
-  content: "";
-  position: absolute;
-  bottom: calc(var(--sprite-width)/-10);
-  left: 0px;
-  width: var(--sprite-width);
-  height: calc(var(--sprite-width)/5);
-  height: calc(var(--sprite-width)/2);
-  background: #000;
-  border-radius: 50%;
-  opacity: 0.4;
-  filter: blur(1.5px);
-}
-*/
 .dark {
   filter: brightness(0.4) saturate(3);
 }
@@ -200,3 +181,46 @@ x-sprite canvas {
   filter: brightness(1.3) saturate(1.5);
 }
 
+.actor {
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+}
+.head {
+  border-radius: 50%;
+  background: linear-gradient(grey 16px, black 16px 19px, white 19px);
+  width: 42px;
+  height: 42px;
+  top: 7px;
+  left: 4px;
+  border: solid 3px black;
+}
+.head:after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  background-color: grey;
+  position: absolute;
+  border-radius: 50%;
+  border: solid 3px black;
+  top: -12px;
+  left: 12px;
+}
+.body {
+  width: 33px;
+  background-color: #2e6fa9a1;
+  height: 76px;
+  top: 38px;
+  left: 9px;
+  transform: perspective(2px) rotateX(1deg);
+  border: solid 3px black;
+  border-bottom-width: 1px;
+}
+.pack {
+  width: 40px;
+  height: 42px;
+  background-color: red;
+  top: 52px;
+  left: 5px;
+  border: solid 3px black;
+}
