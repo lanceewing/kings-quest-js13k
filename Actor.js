@@ -17,7 +17,7 @@ class Actor extends Sprite {
 
     // An HTML template is used for the structure of the actor.
     this.appendChild(document.importNode(document.getElementById('person').content, true));
-    this.canvas = this.getElementsByClassName('actor')[0];
+    this.canvas = this.querySelector('.actor');
   }
 
   /**

@@ -57,12 +57,12 @@ class Sprite extends HTMLElement {
         this.maxStep = 5;
         this.step = this.stepInc = (this.maxStep / 10);
 
-        this.direction = 0;
+        this.direction = Sprite.OUT;
         this.directionLast = 1;
         this.heading = null;
         this.backgroundX = 0;
         this.backgroundY = 0;
-        this.facing = 1;
+        this.facing = 3;
         this.destZ = -1;
         this.destX = -1;
         this.destFn = null;

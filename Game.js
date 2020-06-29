@@ -285,28 +285,18 @@ class Game {
      */
     newRoom() {
         // Remove the previous room's Objs from the screen.
-        for (let i = 0; i < this.objs.length; i++) {
-            this.objs[i].remove();
-        }
+        this.objs.forEach(obj => obj.remove());
         this.objs = [];
 
         this.roomData = this.rooms[this.room - 1];
 
         // Add props
-        for (let i = 0; i < this.props.length; i++) {
-            let prop = this.props[i];
-
-            // Is this prop in the current room?
-            if (prop[0] == this.room) {
-                this.addPropToRoom(prop);
-            }
-        }
+        this.props.forEach(prop => {
+            if (prop[0] == this.room) this.addPropToRoom(prop);
+        });
 
         // Add event listeners for objects in the room.
-        let screenObjs = this.screen.children;
-        for (let i = 0; i < screenObjs.length; i++) {
-            this.addObjEventListeners(screenObjs[i]);
-        }
+        [...this.screen.children].forEach(obj => this.addObjEventListeners(obj));
 
         this.fadeIn(this.screen);
         this.ego.show();
