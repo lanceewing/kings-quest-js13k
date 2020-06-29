@@ -33,16 +33,11 @@ class Sprite extends HTMLElement {
         this.style.width = width + 'px';
         this.style.height = height + 'px';
         this.style.setProperty('--sprite-width', width + 'px');
-    
-        this.wrap = document.createElement('x-wrap');
-        this.wrap.style.width = width + 'px';
-        this.wrap.style.height = height + 'px';
-        this.appendChild(this.wrap);
 
         // If we were given content then add it.
         if (content) {
             this.canvas = Util.renderEmoji(content, Math.max(this.width, this.height));
-            this.wrap.appendChild(this.canvas);
+            this.appendChild(this.canvas);
         }
 
         if (shadow) {
@@ -210,16 +205,6 @@ class Sprite extends HTMLElement {
         if (oldFacing != this.facing) {
             this.classList.remove('facing' + oldFacing);
             this.classList.add('facing' + this.facing);
-        }
-  
-        // If the canvas width is greater than the Sprite width, it means that the sprite
-        // sheet has multiple appearances or costumes, each which relates to a facing direction.
-        if (this.canvas && (this.canvas.width > this.width)) {
-            // Adjust the background position to show the correct part of the sprite sheet for the direction.
-            this.backgroundX = (-((this.facing - 1) * this.width));
-            this.backgroundY = (-(~~(this.cell/10) * this.height));
-            this.canvas.style.left = this.backgroundX + 'px';
-            this.canvas.style.top = this.backgroundY + 'px';
         }
     }
   

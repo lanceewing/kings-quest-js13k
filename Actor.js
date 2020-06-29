@@ -14,12 +14,6 @@ class Actor extends Sprite {
    */
   init(game, width, height, content) {
     super.init(game, width, height, content);
-    
-    // TODO: This is only applicable for Ego.
-    this.colour = 'grey';
-    this.hat = 'grey';
-    this.face = 'white';
-    this.pack = 'red';
 
     // An HTML template is used for the structure of the actor.
     this.appendChild(document.importNode(document.getElementById('person').content, true));

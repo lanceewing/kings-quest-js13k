@@ -76,7 +76,6 @@ class Game {
     defineCustomElements() {
         customElements.define('x-sprite', Sprite);
         customElements.define('x-ego', Ego);
-        customElements.define('x-wrap', class Wrap extends HTMLElement {});
         customElements.define('x-shadow', class Shadow extends HTMLElement {});
     }
 
