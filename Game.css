@@ -212,7 +212,7 @@ x-sprite canvas {
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
   height: 0;
-  width: 49px;
+  width: 50px;
   top: 47px;
 }
 .body:after {
@@ -222,9 +222,27 @@ x-sprite canvas {
   border-left: 14px solid transparent;
   border-right: 14px solid transparent;
   height: 0;
-  width: 41px;
+  width: 42px;
   top: 3px;
   left: -11px;
+}
+.facing1 .body {
+  width: 35px;
+  border-right-width: 0px;
+}
+.facing1 .body:after {
+  width: 27.5px;
+  border-right-width: 0px;
+}
+.facing2 .body {
+  width: 35px;
+  left: 15px;
+  border-left-width: 0px;
+}
+.facing2 .body:after {
+  width: 27.5px;
+  left: 3.5px;
+  border-left-width: 0px;
 }
 .feet {
   top: 114px;
