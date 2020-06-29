@@ -42,7 +42,6 @@ class Sprite extends HTMLElement {
 
         if (shadow) {
             this.shadow = document.createElement('x-shadow');
-            this.shadow.style.zIndex = 0;
             this.appendChild(this.shadow);
         }
 

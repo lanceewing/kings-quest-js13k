@@ -168,6 +168,7 @@ x-shadow {
   border-radius: 50%;
   opacity: 0.5;
   filter: blur(1.2px);
+  z-index: 0;
 }
 x-sprite canvas {
   width: 100%;
@@ -304,4 +305,32 @@ x-sprite canvas {
 }
 .facing3 .pack {
   z-index: 0;
+}
+
+.bubble {
+  font-size: smaller;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: bold;
+  padding: 15px;
+  color: black;
+  background: white;
+  border-radius: 20px;
+  bottom: 170px;
+  border: 2px solid black;
+  box-shadow: 6px 3px black;
+}
+.speech:before {
+  z-index: 1;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -29px;
+  left: 9px;
+  width: 15px;
+  height: 15px;
+  transform: rotate(45deg);
+  background-color: white;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
+  box-shadow: 5px 1px black;
 }
