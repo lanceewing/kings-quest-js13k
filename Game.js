@@ -16,6 +16,26 @@ class Game {
 
     itemTop = -1;
 
+    itemIcons = {
+        'seed'    : '🌱',
+        'bowl'    : '🥣',
+        'carrot'  : '🥕',
+        'cheese'  : '🧀',
+        'money'   : '💰',
+        'clover'  : '🍀',
+        'dagger'  : '🗡',
+        'egg'     : '🥚',
+        'fiddle'  : '🎻',
+        'mirror'  : '🔍',
+        'mushroom': '🍄',
+        'note'    : '📄',
+        'pouch'   : '👜',
+        'sceptre' : '🦯',
+        'shield'  : '🛡',
+        'bow'     : '🏹',
+        'walnut'  : '🌰'
+    };
+
     rooms = [
         []
     ];
@@ -62,7 +82,7 @@ class Game {
         this.scoreEl = document.getElementById('score');
         this.items = document.getElementById('itemlist');
         this.sentence = document.getElementById('sentence');
-        this.controls = document.getElementById('controls');
+        this.commands = document.getElementById('commands');
         this.msg = document.getElementById('msg');
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
@@ -91,6 +111,10 @@ class Game {
         // Register click event listeners for item list arrow buttons.
         document.getElementById("up").onclick = e => this.scrollInv(1);
         document.getElementById("down").onclick = e => this.scrollInv(-1);
+
+        this.commands.querySelectorAll('*').forEach(verb => {
+            verb.onclick = e => this.command = this.verb = e.target.dataset.name;
+        });
 
         this.running = true;
         this.init();
@@ -123,7 +147,12 @@ class Game {
         this.room = 1;
         
         // Starting inventory.
-        //this.getItem('dagger');
+        this.getItem('dagger');
+        this.getItem('seed');
+        this.getItem('carrot');
+        this.getItem('cheese');
+        this.getItem('clover');
+        this.getItem('egg');
   
         // Create Ego (the main character) and add it to the screen.
         this.ego = document.createElement('x-ego');
@@ -196,9 +225,18 @@ class Game {
         // Update all objects on the screen.
         this.updateObjects();
 
-
+        // Update sentence.
+        if (!this._gameOver) {
+            this.sentence.innerHTML = this.command + ' ' + this.thing;
+        } else {
+            this.sentence.innerHTML = 'Game Over';
+        }
 
         this.userInput.processUserInput(this.ego);
+
+        // Update cursor and overlay based on user input state.
+        this.overlay.style.display = (this.inputEnabled? 'none' : 'block');
+        this.wrap.style.cursor = (this.inputEnabled? 'crosshair' : 'wait');
     }
 
     /**
@@ -360,10 +398,7 @@ class Game {
                 // If the name contains _ then we also split on this and add classes for
                 // each part, e.g. for green_key we add "green" and "key".
                 if (name.indexOf('_') > -1) {
-                    let parts = name.split('_');
-                    for (let i=0; i<parts.length; i++) {
-                        obj.classList.add(parts[i]);
-                    }
+                    name.split('_').forEach(part => obj.classList.add(part));
                 }
             }
 
@@ -417,10 +452,13 @@ class Game {
       
     /**
      * Adds the given item to the inventory.
+     * 
+     * @param {string} name
      */
     getItem(name) {
-        let item = document.createElement('div');
-        item.innerHTML = name;
+        let item = document.createElement('span');
+        item.innerHTML = this.itemIcons[name];
+        item.dataset.name = name;
         this.items.appendChild(item);
 
         item.onmouseenter = e => this.objMouseEnter(e);
