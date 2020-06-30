@@ -14,7 +14,7 @@ class Game {
 
     score = 0;
 
-    itemTop = -1;
+    itemsLeft = 0;
 
     itemIcons = {
         'seed'    : '🌱',
@@ -151,6 +151,17 @@ class Game {
         this.getItem('cheese');
         this.getItem('clover');
         this.getItem('egg');
+        this.getItem('pouch');
+        this.getItem('shield');
+        this.getItem('walnut');
+        this.getItem('bowl');
+        this.getItem('money');
+        this.getItem('fiddle');
+        this.getItem('mirror');
+        this.getItem('bow');
+        this.getItem('note');
+        this.getItem('sceptre');
+        this.getItem('mushroom');
   
         // Create Ego (the main character) and add it to the screen.
         this.ego = document.createElement('x-ego');
@@ -496,11 +507,11 @@ class Game {
      * @param {number} dir The direction to scroll the inventory.
      */
     scrollInv(dir) {
-        let newTop = this.itemTop + (91 * dir);
+        let newLeft = this.itemsLeft + (77 * dir);
         let invCount = this.items.children.length;
-        if ((newTop <= -1) && (newTop > -((invCount - 4) * 91))) {
-            this.itemTop = newTop;
-            this.items.style.left = this.itemTop + 'px';
+        if ((newLeft <= 0) && (newLeft >= -((invCount - 6) * 77))) {
+            this.itemsLeft = newLeft;
+            this.items.style.left = this.itemsLeft + 'px';
         }
     }
 

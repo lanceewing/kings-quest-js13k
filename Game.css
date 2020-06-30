@@ -80,7 +80,7 @@ span {
 #itemlist {
   position: absolute;
   left: 0px;
-  padding: 5px 4px 2px 12px;
+  padding: 5px 4px 2px 0px;
   width: 2000px;
   transition: left 100ms ease-in-out;
 }
