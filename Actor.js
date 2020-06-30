@@ -11,6 +11,9 @@ class Actor extends Sprite {
    * Initialises the Actor with a given position.
    * 
    * @param {Game} game 
+   * @param {number} width The width of the Actor.
+   * @param {number} height The height of the Actor.
+   * @param {string} content The content to add into the Actor. Optional.
    */
   init(game, width, height, content) {
     super.init(game, width, height, content);
@@ -24,6 +27,8 @@ class Actor extends Sprite {
    * Tells the Actor to stop moving. If fully is not provided, and there are pending destination
    * points, then the Actor will start moving to the next point. If fully is set to true then 
    * all pending destination points are cleared.
+   * 
+   * @param {boolean} fully Whether to fully stop the Actor or not.
    */
   stop(fully) {
     // Clear the current destination.
@@ -42,6 +47,10 @@ class Actor extends Sprite {
 
   /**
    * Tells the Actor to move to the given position on the screen.
+   * 
+   * @param {number} x The X position to move to.
+   * @param {number} y The Y position to move to.
+   * @param {Function} fn The function to execute once the Actor reaches the X/Y position.
    */
   moveTo(x, z, fn) {
     this.dests.push({ z: z, x: x, fn: fn });
@@ -50,6 +59,10 @@ class Actor extends Sprite {
   /**
    * Tells the Actor to say the given text within a speech bubble of the given width. Will
    * execute the given optional next function if provided after the speech bubble is removed.
+   * 
+   * @param {string} text The text to say.
+   * @param {number} width The width of the speech bubble.
+   * @param {Function} next The function to execute after saying the text. Optional.
    */
   say(text, width, next) {
     let game = this.game;

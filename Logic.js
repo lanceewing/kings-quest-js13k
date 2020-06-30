@@ -14,12 +14,12 @@ class Logic {
     }
 
     /**
+     * Processes a command from the user input.
      * 
-     * 
-     * @param {string} verb 
-     * @param {string} cmd 
-     * @param {string} thing 
-     * @param {*} e 
+     * @param {string} verb The verb part of the command to process.
+     * @param {string} cmd The full command to process.
+     * @param {string} thing The thing or noun part of the command to process.
+     * @param {MouseEvent} e The mouse event associated with the command to process.
      */
     process(verb, cmd, thing, e) {
       let newCommand = cmd;

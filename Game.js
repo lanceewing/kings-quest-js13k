@@ -41,28 +41,28 @@ class Game {
     ];
 
     props = [
-      // Room#, type, name, content, width, height, x, y, element reference
-      // Other potential settings (not currently used): zindex, colour
-      // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop, 5 = no shadow prop
+        // Room#, type, name, content, width, height, x, y, element reference
+        // Other potential settings (not currently used): zindex, colour
+        // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop, 5 = no shadow prop
 
-      // Room 1
-      [ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
-      [ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
-      [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
-      [ 1, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
-      [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
-      [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
-      [ 1, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
-      [ 1, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
-      [ 1, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
-      [ 1, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
-      [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
-      [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
+        // Room 1
+        [ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
+        [ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
+        [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
+        [ 1, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
+        [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
+        [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
+        [ 1, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
+        [ 1, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
+        [ 1, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
+        [ 1, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
+        [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
+        [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
 
-      [ 1, 5, 'cloud', '☁', 200, 50, 50, 130, null ],
-      [ 1, 5, 'cloud', '☁', 200, 50, 450, 130, null ],
+        [ 1, 5, 'cloud', '☁', 200, 50, 50, 130, null ],
+        [ 1, 5, 'cloud', '☁', 200, 50, 450, 130, null ],
 
-      // Room 2
+        // Room 2
 
     ];
 
@@ -137,9 +137,7 @@ class Game {
   
         // For restarts, we'll need to remove the objects from the screen.
         if (this.objs) {
-          for (let i=0; i<this.objs.length; i++) {
-            this.objs[i].remove();
-          }
+            this.obj.forEach(obj => obj.remove());
         }
         
         // Set the room back to the start, and clear the object map.
@@ -192,10 +190,7 @@ class Game {
         }
 
         // Remove the Sprite from our list of managed objects.
-        let i = this.objs.indexOf(obj);
-        if (i != -1) {
-            this.objs.splice(i, 1);
-        }
+        this.objs = this.objs.filter(o => o !== obj);
     }
 
     /**
@@ -297,6 +292,8 @@ class Game {
 
     /**
      * Adds the given points to the current score.
+     * 
+     * @param {number} points The number of points to increment the score by.
      */
     addToScore(points) {
         this.score += points;
@@ -305,16 +302,16 @@ class Game {
       
     /**
      * Processes the current user interaction.
+     * 
+     * @param {MouseEvent} e The mouse event that trigger the command to process.
      */
     processCommand(e) {
         if (this.inputEnabled && !this._gameOver) {
           this.command = this.logic.process(this.verb, this.command, this.thing, e);
-          //if (e) e.stopPropagation();
           if (this.command == this.verb) {
             this.command = this.verb = 'Walk to';
           }
         }
-        // TODO: Why didn't I have this here when userInput was disabled?
         if (e) e.stopPropagation();
     }
 
@@ -416,6 +413,8 @@ class Game {
     /**
      * Adds the necessarily event listens to the given element to allow it to be 
      * interacted with as an object in the current room.
+     * 
+     * @param {HTMLElement} elem The HTMLElement to add the object event listeners to.
      */
     addObjEventListeners(elem) {
         // It is important that we don't use addEventListener in this case. We need to overwrite
@@ -426,24 +425,27 @@ class Game {
     }
 
     /**
+     * Handles a mouse enter event.
      * 
-     * @param {*} e 
+     * @param {MouseEvent} e 
      */
     objMouseEnter(e) {
         this.thing = (e.target.dataset.name? e.target.dataset.name : (e.target.id? e.target.id.replace('_',' ') : e.target.className));
     }
 
     /**
+     * Handles a mouse leave event.
      * 
-     * @param {*} e 
+     * @param {MouseEvent} e 
      */
     objMouseLeave(e) {
         this.thing = '';
     }
 
     /**
+     * Handles a mouse click event.
      * 
-     * @param {*} e 
+     * @param {MouseEvent} e 
      */
     objClicked(e) {
         this.thing = (e.target.dataset.name? e.target.dataset.name : (e.target.id? e.target.id.replace('_',' ') : e.target.className));
@@ -453,7 +455,7 @@ class Game {
     /**
      * Adds the given item to the inventory.
      * 
-     * @param {string} name
+     * @param {string} name The name of the item to add to the inventory.
      */
     getItem(name) {
         let item = document.createElement('span');
@@ -470,6 +472,8 @@ class Game {
 
     /**
      * Checks if the given item is in the inventory.
+     * 
+     * @param {string} name The name of the item to check is in the inventory.
      */
     hasItem(name) {
         return this.inventory.hasOwnProperty(name);
@@ -477,6 +481,8 @@ class Game {
 
     /**
      * Removes the given item from the inventory.
+     * 
+     * @param {string} name The name of the item to drop.
      */
     dropItem(name) {
         let item = this.inventory[name];
@@ -487,7 +493,7 @@ class Game {
     /**
      * Handles scrolling of the inventory list.
      * 
-     * @param {number} dir
+     * @param {number} dir The direction to scroll the inventory.
      */
     scrollInv(dir) {
         let newTop = this.itemTop + (91 * dir);
@@ -501,7 +507,7 @@ class Game {
     /**
      * Fades in the given DOM Element.
      * 
-     * @param {Object} elem The DOM Element to fade in.
+     * @param {HTMLElement} elem The DOM Element to fade in.
      */
     fadeIn(elem) {
         // Remove any previous transition.
@@ -513,11 +519,11 @@ class Game {
             elem.style.removeProperty('transition');
         }, 700);
     }
-      
+
     /**
      * Fades out the given DOM Element.
      * 
-     * @param {Object} elem The DOM Element to fade out.
+     * @param {HTMLElement} elem The DOM Element to fade out.
      */
     fadeOut(elem) {
         elem.style.transition = 'opacity 0.5s';

@@ -71,9 +71,11 @@ class Sprite extends HTMLElement {
     }
  
     /**
+     * Tests if this Sprite is touching another Sprite.
      * 
+     * @param {Sprite} obj The Sprite to test if this Sprite is touching.
      * 
-     * @param {*} obj
+     * @returns {boolean} true if this Sprite is touching the given Sprite; otherwise false.
      */
     touching(obj) {
         // Some objects are not solid, e.g. ghosts.
@@ -92,6 +94,8 @@ class Sprite extends HTMLElement {
     }
     /**
      * Resets this Sprite's position to its previous position.
+     * 
+     * @returns {Object} The x/y/z position that the Sprite is now at.
      */
     reset() {
         let pos = this.positions.pop();
