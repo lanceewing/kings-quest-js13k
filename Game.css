@@ -151,10 +151,8 @@ span {
 #screen * {
   position: absolute;
 }
-x-wrap {
-  overflow: hidden;
-  left: 0px;
-  top: 0px;
+x-ego {
+  transform: rotateY(0deg);
 }
 x-shadow {
   --shadow-width: var(--sprite-width);

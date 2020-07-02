@@ -147,6 +147,9 @@ class Sprite extends HTMLElement {
         if (this.canvas) {
             this.canvas.style.zIndex = Math.floor(this.z);
         }
+
+        //let scale = (((this.cz - 1000) / 2000) * 0.5) + 0.5;
+        //this.style.transform = `rotateY(0deg) scaleY(${scale})`;
     }
 
     /**
@@ -230,49 +233,20 @@ class Sprite extends HTMLElement {
                 x += Math.cos(this.heading) * Math.round(this.step * this.game.stepFactor);
                 z += Math.sin(this.heading) * Math.round(this.step * this.game.stepFactor);
                 
-                // if (this.game.inputEnabled || (this != this.game.ego)) {
-                //     // This edge number is simply to stop ego. He won't leave the room.
-                //     if (z > 950) edge = 10;
-                // } else {
-                //     if (z > 1940) {
-                //         if (x < 80) {
-                //             edge = 2;   // Left path
-                //         } else if (x > 1740) {
-                //             edge = 5;   // Right path
-                //         } else if (x > 960) {
-                //             edge = 7;   // Right door down
-                //         } else {
-                //             edge = 8;   // Left door down.
-                //         }
-                //     }
-                // }
-                
-                // Check whether ego has walked to a door or path..
-                if (z < 330) {
-                    if (this == this.game.ego) {
-                        // We stop user input already and allow the user to walk a bit further.
-                        this.game.inputEnabled = false;
-                    } else {
-                        // Non-ego actor has hit wall.
-                        edge = 10;
-                    }
+                // 1 = left/west
+                // 2 = right/east
+                // 3 = down/south
+                // 4 = up/north
+
+                if (this.game.inputEnabled) {
+                    // Check whether a room edge has been hit.
+                    if (x < 0) edge = 1;
+                    if ((x + this.width) > 960) edge = 2;
+                    // This edge number is simply to stop ego. He won't leave the room.
+                    if (z > 985) edge = 3;
+                    if (z < 350) edge = 4;
                 }
-                if (z < 300) {
-                    // Ego has now reached the horizon, so time for a room change. The x value
-                    // tells us which exit it was.
-                    if (!this.game.ignoreHorizon) {
-                        edge = (x < 960? 3 : 4);
-                    }
-                }
-                
-                // 1 = left edge
-                // 2 = left path
-                // 3 = left door up
-                // 4 = right door up
-                // 5 = right path
-                // 6 = right edge
-                // 7 = right door down
-                // 8 = left door down
+                  
 
                 // Increment the step size the step increment, capping at the max step.
                 if ((this.step += this.stepInc) > this.maxStep) this.step = this.maxStep;

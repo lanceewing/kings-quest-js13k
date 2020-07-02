@@ -37,7 +37,41 @@ class Game {
     };
 
     rooms = [
-        []
+        // 1 = left/west
+        // 2 = right/east
+        // 3 = down/south
+        // 4 = up/north
+        [0, 0, 0, 0, 0], // Well
+        [0, 0, 0, 0, 0], // Well
+        [0, 0, 0, 0, 0], // Well
+        [0, 0, 0, 0, 0], // Beanstalk - first
+        [0, 0, 0, 0, 0], // Beanstalk - second
+        [0, 0, 0, 0, 0], // Beanstalk - third (cloud entry)
+        [0, 0, 0, 0, 0], // Cloud entry
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Sky cave - top
+        [0, 0, 0, 0, 0], // Sky cave - mid
+        [0, 0, 0, 0, 0], // Sky cave - bottom
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Castle - entry
+        [0, 0, 0, 0, 0], // Castle - throne
+        [0, 0, 0, 0, 0], // Tree branch (nest/egg)
+        [0, 0, 0, 0, 0], // Woodcutter's house
+        [0, 0, 0, 0, 0], // Witches house
+        [0, 0, 0, 0, 0], // Small cave ?
+        [0, 0, 0, 0, 0], // (spare)
+        [0, 0, 0, 0, 0]  // (spare)
+        // Daventry rooms from this point (48 of them)
     ];
 
     props = [
@@ -88,6 +122,23 @@ class Game {
         this.userInput = new UserInput(this, screen);
         this.logic = new Logic(this);
         this.start();
+    }
+
+    buildMap() {
+        // 76 rooms total
+        // Daventry - 8 x 6 = 48 rooms
+        // Well - 3 rooms
+        // Sky Land - 10 rooms (3 beanstalk, 7 clouds)
+        // Sky Cave - 3 rooms
+        // Leprachaun Cave - 6 rooms
+        // Inside Castle - 2 rooms
+        // Up tree with nest/egg - 1 room
+        // Woodcutter's House - 1 room
+        // Witches House - 1 room
+        // In small cave - 1 room
+
+        //[ 0, 8, 2,  9, 41 ],
+        //[ 0, 1, 3, 10, 42 ],
     }
 
     /**
