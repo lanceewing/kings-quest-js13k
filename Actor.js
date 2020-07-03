@@ -125,7 +125,7 @@ class Actor extends Sprite {
       let direction;
 
       if ((this.destX != -1) && (this.destZ != -1)) {
-        if (this.touching({ cx: this.destX, cy: this.cy, z: this.destZ, radius: -this.radius }, 20)) {
+        if (this.touching({ cx: this.destX, cy: this.cy, cz: this.destZ*3, radius: -this.radius }, 20)) {
           // We've reached the destination.
           this.stop();
 

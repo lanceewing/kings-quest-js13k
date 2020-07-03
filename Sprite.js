@@ -68,16 +68,19 @@ class Sprite extends HTMLElement {
         this.dests = [];
         this.cell = 0;
         this.visible = false;
+
+        this.room = this.game.room;
     }
  
     /**
      * Tests if this Sprite is touching another Sprite.
      * 
      * @param {Sprite} obj The Sprite to test if this Sprite is touching.
+     * @param {number} gap If provided, then if the two Sprites are within this distance, the method returns true.
      * 
      * @returns {boolean} true if this Sprite is touching the given Sprite; otherwise false.
      */
-    touching(obj) {
+    touching(obj, gap) {
         // Some objects are not solid, e.g. ghosts.
         if (this.ignore || obj.ignore) {
             return false;
@@ -86,7 +89,7 @@ class Sprite extends HTMLElement {
             let dx = this.cx - obj.cx;
             let dz = this.cz - obj.cz;
             let dist = (dx * dx) + (dz * dz);
-            let rsum = (this.radius + obj.radius);
+            let rsum = (this.radius + obj.radius + (gap | 0));
             return (dist <= (rsum * rsum));
         } else {
             return false;
@@ -253,7 +256,9 @@ class Sprite extends HTMLElement {
             }
         
             if (edge) {
-                this.hitEdge(edge);
+                if ((this != this.game.ego) || this.game.inputEnabled) {
+                    this.hitEdge(edge);
+                }
             } else {
                 // If x or z has changed, update the position.
                 if ((x != this.x) || (z != this.z)) {

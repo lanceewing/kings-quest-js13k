@@ -79,24 +79,24 @@ class Game {
         // Other potential settings (not currently used): zindex, colour
         // types: 0 = actor, 1 = item, 2 = prop, 3 = light prop, 4 = dark prop, 5 = no shadow prop
 
-        // Room 1
-        [ 1, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
-        [ 1, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
-        [ 1, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
-        [ 1, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
-        [ 1, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
-        [ 1, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
-        [ 1, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
-        [ 1, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
-        [ 1, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
-        [ 1, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
-        [ 1, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
-        [ 1, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
+        // Room 30
+        [ 31, 2, 'tree', '🌳', 400, 400, 10,  895, null ],
+        [ 31, 3, 'tree', '🌲', 240, 170, 770, 850, null ],
+        [ 31, 4, 'tree', '🌲', 230, 150, 700, 830, null ],
+        [ 31, 2, 'tree', '🌳', 230, 75,  460, 630, null ],
+        [ 31, 4, 'tree', '🌲', 230, 130, 580, 605, null ],
+        [ 31, 3, 'tree', '🌲', 230, 150, 500, 610, null ],
+        [ 31, 4, 'tree', '🌲', 180, 70,  810, 380, null ],
+        [ 31, 2, 'tree', '🌲', 180, 90,  740, 385, null ],
+        [ 31, 4, 'tree', '🌲', 180, 70,  550, 385, null ],
+        [ 31, 2, 'tree', '🌲', 180, 90,  480, 390, null ],
+        [ 31, 3, 'tree', '🌲', 180, 110, 300, 810, null ],
+        [ 31, 4, 'tree', '🌳', 180, 70,  280, 840, null ],
 
-        [ 1, 5, 'cloud', '☁', 200, 50, 50, 130, null ],
-        [ 1, 5, 'cloud', '☁', 200, 50, 450, 130, null ],
+        [ 31, 5, 'cloud', '☁', 200, 50, 50, 130, null ],
+        [ 31, 5, 'cloud', '☁', 200, 50, 450, 130, null ],
 
-        // Room 2
+        // Room 31
 
     ];
 
@@ -121,24 +121,26 @@ class Game {
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
         this.logic = new Logic(this);
+        this.buildMap();
         this.start();
     }
 
+    /**
+     * Builds the map for the Daventry outside rooms.
+     */
     buildMap() {
-        // 76 rooms total
-        // Daventry - 8 x 6 = 48 rooms
-        // Well - 3 rooms
-        // Sky Land - 10 rooms (3 beanstalk, 7 clouds)
-        // Sky Cave - 3 rooms
-        // Leprachaun Cave - 6 rooms
-        // Inside Castle - 2 rooms
-        // Up tree with nest/egg - 1 room
-        // Woodcutter's House - 1 room
-        // Witches House - 1 room
-        // In small cave - 1 room
-
-        //[ 0, 8, 2,  9, 41 ],
-        //[ 0, 1, 3, 10, 42 ],
+        // Daventry map starts at room 30.
+        for (let room=31; room<79; room++) {
+            let roomX = (room % 8);
+            let roomY = ~~(room / 8);
+            this.rooms[room-1] = [
+                0, 
+                (roomY * 8) + ((roomX - 1) & 0xF),  // Left
+                (roomY * 8) + ((roomX + 1) & 0xF),  // Right
+                (((roomY + 1) & 0xF) * 8) + roomX,  // Down
+                (((roomY - 1) & 0xF) * 8) + roomX,  // Up
+            ];
+        }
     }
 
     /**
@@ -193,7 +195,7 @@ class Game {
         
         // Set the room back to the start, and clear the object map.
         this.objs = [];
-        this.room = 1;
+        this.room = 31;
         
         // Starting inventory.
         this.getItem('dagger');
@@ -290,6 +292,17 @@ class Game {
         }
 
         this.userInput.processUserInput(this.ego);
+
+        // If after updating all objects, the room that Ego says it is in is different
+        // than what it was previously in, then we trigger entry in to the new room.
+        if (this.ego.room != this.room) {
+            let game = this;
+            this.room = this.ego.room;
+            this.fadeOut(this.screen);
+            setTimeout(function() {
+                game.newRoom();
+            }, 200);
+        }
 
         // Update cursor and overlay based on user input state.
         this.overlay.style.display = (this.inputEnabled? 'none' : 'block');
@@ -398,6 +411,8 @@ class Game {
         this.fadeIn(this.screen);
         this.ego.show();
         this.fadeIn(this.ego);
+
+        this.inputEnabled = true;
     }
 
     /**

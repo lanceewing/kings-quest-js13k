@@ -25,7 +25,7 @@ class Ego extends Actor {
      */
     update(game) {
         super.update(game);
-
+        
     }
 
     /**
@@ -43,13 +43,14 @@ class Ego extends Actor {
             if (edge < 5) {
                 let edgeData = this.game.rooms[this.room - 1][edge];
                 if (edgeData) {
-                    this.inputEnabled = false;
+                    this.game.inputEnabled = false;
 
                     // Hide ego before we reposition him to the new entry point.
                     this.hide();
 
                     // Set the new room for ego.
-                    this.room = edgeData[0];
+                    this.room = edgeData;
+                    console.log(`room: ${this.room}`);
 
                     // 1 = left/west
                     // 2 = right/east
@@ -57,21 +58,21 @@ class Ego extends Actor {
                     // 4 = up/north
 
                     // Work out the new position for ego.
-                    switch (edgeData[1]) {
-                        case 1: // From the left edge of screen
-                            this.setPosition(0 - this.width * 2, this.y, this.z);
-                            this.setDirection(Sprite.RIGHT);
-                            this.moveTo(this.width + 50, this.z, function () {
-                                this.game.inputEnabled = true;
-                            });
+                    switch (edge) {
+                        case 1: // From the left edge of screen.
+                            this.setPosition(960 - this.width, this.y, this.z);
+                            this.setDirection(Sprite.LEFT);
+                            //this.moveTo(960 - this.width - 50, this.z, function () {
+                            //    this.game.inputEnabled = true;
+                            //});
                             break;
 
-                        case 2: // From the right edge of screen.
-                            this.setPosition(960 + this.width, this.y, this.z);
-                            this.setDirection(Sprite.LEFT);
-                            this.moveTo(960 - this.width - 50, this.z, function () {
-                                this.game.inputEnabled = true;
-                            });
+                        case 2: // From the right edge of screen
+                            this.setPosition(0, this.y, this.z);
+                            this.setDirection(Sprite.RIGHT);
+                            //this.moveTo(this.width + 50, this.z, function () {
+                            //    this.game.inputEnabled = true;
+                            //});
                             break;
 
                         case 3: // From the bottom edge of screen.
