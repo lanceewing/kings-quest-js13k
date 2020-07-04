@@ -119,7 +119,7 @@ span {
 
   background-image: url(kq1_sms.png);
   background-size: 8025px 3090px;
-  background-position: -38px 1px;
+  background-position: -38px 1px;  /* room 31 */
   
   /* (995 gaps horiz)
   -1032
@@ -131,7 +131,7 @@ span {
   -1084
 
   */
-  /* clip: rect(0px,960px,503px,0px); */
+
   top: 50vh;
   left: 50vw;
   width: 960px;

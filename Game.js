@@ -53,7 +53,7 @@ class Game {
         [0, 0, 0, 0, 0], // Skyland
         [0, 0, 0, 0, 0], // Skyland
         [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland
+        [0, 0, 0, 0, 0], // Skyland - cave entrance
         [0, 0, 0, 0, 0], // Sky cave - top
         [0, 0, 0, 0, 0], // Sky cave - mid
         [0, 0, 0, 0, 0], // Sky cave - bottom
@@ -296,12 +296,9 @@ class Game {
         // If after updating all objects, the room that Ego says it is in is different
         // than what it was previously in, then we trigger entry in to the new room.
         if (this.ego.room != this.room) {
-            let game = this;
             this.room = this.ego.room;
             this.fadeOut(this.screen);
-            setTimeout(function() {
-                game.newRoom();
-            }, 200);
+            setTimeout(() => this.newRoom(), 200);
         }
 
         // Update cursor and overlay based on user input state.
