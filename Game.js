@@ -221,6 +221,7 @@ class Game {
         this.ego.init(this, 50, 150);
         this.ego.setPosition(550, 0, 850);
         this.ego.nesw = 1;
+        this.ego.id = 'me';
         this.screen.appendChild(this.ego);
   
         // Enter the starting room.
@@ -528,7 +529,8 @@ class Game {
      * @param {MouseEvent} e 
      */
     objClicked(e) {
-        this.thing = (e.target.dataset.name? e.target.dataset.name : (e.target.id? e.target.id.replace('_',' ') : e.target.className));
+        let target = e.currentTarget;
+        this.thing = (target.dataset.name? target.dataset.name : (target.id? target.id.replace('_',' ') : target.className));
         this.processCommand(e);
     }
       

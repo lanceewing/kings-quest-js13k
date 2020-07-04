@@ -25,6 +25,9 @@ class Logic {
       let newCommand = cmd;
       let thingId = thing.replace(' ','_');
   
+      // If we don't yet have a thing to do something to, then ignore.
+      if (!thing) return verb;
+
       switch (verb) {
 
   
