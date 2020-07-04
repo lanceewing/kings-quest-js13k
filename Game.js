@@ -285,10 +285,9 @@ class Game {
         this.updateObjects();
 
         // Update sentence.
-        if (!this._gameOver) {
-            this.sentence.innerHTML = this.command + ' ' + this.thing;
-        } else {
-            this.sentence.innerHTML = 'Game Over';
+        let newSentence = (this._gameOver? 'Game Over' : this.command + ' ' + this.thing);
+        if (newSentence != this.lastSentence) {
+            this.sentence.innerHTML = this.lastSentence = newSentence;
         }
 
         this.userInput.processUserInput(this.ego);
@@ -404,6 +403,13 @@ class Game {
 
         // Add event listeners for objects in the room.
         [...this.screen.children].forEach(obj => this.addObjEventListeners(obj));
+
+        // TODO: Remove after rooms have been drawn.
+        if (this.room >= 31 && this.room <= 78) {
+            let newBackX = -(((this.room - 31) % 8) * 998.5) - 38;
+            let newBackY = -((~~((this.room - 31) / 8)) * 510.75) + 1;   // 529
+            this.wrap.style.backgroundPosition = newBackX + 'px ' + newBackY + 'px';
+        }
 
         this.fadeIn(this.screen);
         this.ego.show();
