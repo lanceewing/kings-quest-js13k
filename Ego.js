@@ -74,21 +74,21 @@ class Ego extends Actor {
                             //    this.game.inputEnabled = true;
                             //});
                             break;
-
-                        case 3: // From the bottom edge of screen.
-                            this.setPosition(this.x, this.y, 980);
-                            this.setDirection(Sprite.IN);
-                            this.moveTo(this.x, 975, function () {
-                                this.game.inputEnabled = true;
-                            });
-                            break;
-
-                        case 4: // From the horizon edge of screen
+                        
+                        case 3: // From the horizon edge of screen
                             this.setPosition(this.x, this.y, 355);
                             this.setDirection(Sprite.OUT);
-                            this.moveTo(this.x, 360, function () {
-                                this.game.inputEnabled = true;
-                            });
+                            //this.moveTo(this.x, 360, function () {
+                            //    this.game.inputEnabled = true;
+                            //});
+                            break;
+
+                        case 4: // From the bottom edge of screen.
+                            this.setPosition(this.x, this.y, 980);
+                            this.setDirection(Sprite.IN);
+                            //this.moveTo(this.x, 975, function () {
+                            //    this.game.inputEnabled = true;
+                            //});
                             break;
                     }
 

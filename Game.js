@@ -129,16 +129,16 @@ class Game {
      * Builds the map for the Daventry outside rooms.
      */
     buildMap() {
-        // Daventry map starts at room 30.
-        for (let room=31; room<79; room++) {
-            let roomX = (room % 8);
-            let roomY = ~~(room / 8);
-            this.rooms[room-1] = [
+        // Daventry map starts at room 31 but room 31 is stored in position 30.
+        for (let room=0; room<48; room++) {
+            let roomX = (room % 8) + 8;
+            let roomY = ~~(room / 8) + 6;
+            this.rooms[room + 30] = [
                 0, 
-                (roomY * 8) + ((roomX - 1) & 0xF),  // Left
-                (roomY * 8) + ((roomX + 1) & 0xF),  // Right
-                (((roomY + 1) & 0xF) * 8) + roomX,  // Down
-                (((roomY - 1) & 0xF) * 8) + roomX,  // Up
+                ((roomY % 6) * 8) + ((roomX - 1) % 8) + 31,  // Left
+                ((roomY % 6) * 8) + ((roomX + 1) % 8) + 31,  // Right
+                (((roomY + 1) % 6) * 8) + (roomX % 8) + 31,  // Down
+                (((roomY - 1) % 6) * 8) + (roomX % 8) + 31,  // Up
             ];
         }
     }
