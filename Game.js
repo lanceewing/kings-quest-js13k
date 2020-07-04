@@ -41,34 +41,34 @@ class Game {
         // 2 = right/east
         // 3 = down/south
         // 4 = up/north
-        [0, 0, 0, 0, 0], // Well
-        [0, 0, 0, 0, 0], // Well
-        [0, 0, 0, 0, 0], // Well
+        [0, 0, 0, 0, 0], // Well - In water
+        [0, 0, 0, 0, 0], // Well - Dragon cave
+        [0, 0, 0, 0, 0], // Well - Cave exit
         [0, 0, 0, 0, 0], // Beanstalk - first
         [0, 0, 0, 0, 0], // Beanstalk - second
         [0, 0, 0, 0, 0], // Beanstalk - third (cloud entry)
         [0, 0, 0, 0, 0], // Cloud entry
-        [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland
-        [0, 0, 0, 0, 0], // Skyland - cave entrance
+        [0, 0, 0, 0, 0], // Skyland - SW
+        [0, 0, 0, 0, 0], // Skyland - S
+        [0, 0, 0, 0, 0], // Skyland - SE
+        [0, 0, 0, 0, 0], // Skyland - NW
+        [0, 0, 0, 0, 0], // Skyland - N
+        [0, 0, 0, 0, 0], // Skyland - NW - Cave entrance
         [0, 0, 0, 0, 0], // Sky cave - top
         [0, 0, 0, 0, 0], // Sky cave - mid
         [0, 0, 0, 0, 0], // Sky cave - bottom
+        [0, 0, 0, 0, 0], // Leprechaun cave - Below hole
+        [0, 0, 0, 0, 0], // Leprechaun cave - 
+        [0, 0, 0, 0, 0], // Leprechaun cave - Rat
         [0, 0, 0, 0, 0], // Leprechaun cave
-        [0, 0, 0, 0, 0], // Leprechaun cave
-        [0, 0, 0, 0, 0], // Leprechaun cave
-        [0, 0, 0, 0, 0], // Leprechaun cave
-        [0, 0, 0, 0, 0], // Leprechaun cave
-        [0, 0, 0, 0, 0], // Leprechaun cave
+        [0, 0, 0, 0, 0], // Leprechaun cave - King throne room
+        [0, 0, 0, 0, 0], // Leprechaun cave - Steps to exit
         [0, 0, 0, 0, 0], // Castle - entry
         [0, 0, 0, 0, 0], // Castle - throne
         [0, 0, 0, 0, 0], // Tree branch (nest/egg)
         [0, 0, 0, 0, 0], // Woodcutter's house
         [0, 0, 0, 0, 0], // Witches house
-        [0, 0, 0, 0, 0], // Small cave ?
+        [0, 0, 0, 0, 0], // (spare)
         [0, 0, 0, 0, 0], // (spare)
         [0, 0, 0, 0, 0]  // (spare)
         // Daventry rooms from this point (48 of them)
@@ -261,7 +261,7 @@ class Game {
     /**
      * Scales the screen div to fit the whole screen.
      * 
-     * @param {UIEvent} The resize event.
+     * @param {UIEvent} e The resize event.
      */
     resizeScreen(e) {
         this.scaleX = window.innerWidth / this.wrap.offsetWidth;
@@ -595,11 +595,9 @@ class Game {
         // Remove any previous transition.
         elem.style.transition = 'opacity 0.5s';
         elem.style.opacity = 1.0;
-        setTimeout(function () {
-            // This is so that other css styles can set transitions on the element
-            // while we're not fading in.
-            elem.style.removeProperty('transition');
-        }, 700);
+        // This is so that other css styles can set transitions on the element
+        // while we're not fading in.
+        setTimeout(() => elem.style.removeProperty('transition'), 700);
     }
 
     /**
@@ -616,10 +614,7 @@ class Game {
      * Shakes the screen.
      */
     shakeScreen() {
-        let screen = this.screen;
-        screen.classList.add('shake');
-        setTimeout(function() {
-            screen.classList.remove('shake');
-        }, 1000);
+        this.screen.classList.add('shake');
+        setTimeout(() => this.screen.classList.remove('shake'), 1000);
     }
 }

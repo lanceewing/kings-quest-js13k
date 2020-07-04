@@ -60,7 +60,7 @@ class Ego extends Actor {
                     // Work out the new position for ego.
                     switch (edge) {
                         case 1: // From the left edge of screen.
-                            this.setPosition(960 - this.width, this.y, this.z);
+                            this.setPosition(955 - this.width, this.y, this.z);
                             this.setDirection(Sprite.LEFT);
                             //this.moveTo(960 - this.width - 50, this.z, function () {
                             //    this.game.inputEnabled = true;
@@ -68,14 +68,14 @@ class Ego extends Actor {
                             break;
 
                         case 2: // From the right edge of screen
-                            this.setPosition(0, this.y, this.z);
+                            this.setPosition(5, this.y, this.z);
                             this.setDirection(Sprite.RIGHT);
                             //this.moveTo(this.width + 50, this.z, function () {
                             //    this.game.inputEnabled = true;
                             //});
                             break;
                         
-                        case 3: // From the horizon edge of screen
+                        case 3: // From the bottom edge of screen
                             this.setPosition(this.x, this.y, 355);
                             this.setDirection(Sprite.OUT);
                             //this.moveTo(this.x, 360, function () {
@@ -83,7 +83,7 @@ class Ego extends Actor {
                             //});
                             break;
 
-                        case 4: // From the bottom edge of screen.
+                        case 4: // From the horizon edge of screen.
                             this.setPosition(this.x, this.y, 980);
                             this.setDirection(Sprite.IN);
                             //this.moveTo(this.x, 975, function () {
@@ -105,26 +105,28 @@ class Ego extends Actor {
         let direction = 0;
         let userInput = this.game.userInput;
 
-        // Check if the direction keys are pressed and adjust Ego's direction accordingly.
-        if (userInput.left() && !userInput.right()) {
-            direction |= Sprite.LEFT;
-        }
-        if (userInput.right() && !userInput.left()) {
-            direction |= Sprite.RIGHT;
-        }
-        if (userInput.up() && !userInput.down()) {
-            direction |= Sprite.IN;
-        }
-        if (userInput.down() && !userInput.up()) {
-            direction |= Sprite.OUT;
-        }
+        if (this.game.inputEnabled) {
+            // Check if the direction keys are pressed and adjust Ego's direction accordingly.
+            if (userInput.left() && !userInput.right()) {
+                direction |= Sprite.LEFT;
+            }
+            if (userInput.right() && !userInput.left()) {
+                direction |= Sprite.RIGHT;
+            }
+            if (userInput.up() && !userInput.down()) {
+                direction |= Sprite.IN;
+            }
+            if (userInput.down() && !userInput.up()) {
+                direction |= Sprite.OUT;
+            }
 
-        if (direction) {
-            this.cell = ((this.cell + 1) % 30);
-        }
+            if (direction) {
+                this.cell = ((this.cell + 1) % 30);
+            }
 
-        // Update Ego's direction to what was calculated above. The move method will use this 
-        // when moving Ego. The direction is converted into a heading within setDirection.
-        this.setDirection(direction);
+            // Update Ego's direction to what was calculated above. The move method will use this 
+            // when moving Ego. The direction is converted into a heading within setDirection.
+            this.setDirection(direction);
+        }
     }
 }
