@@ -61,7 +61,7 @@ class Sprite extends HTMLElement {
         this.heading = null;
         this.backgroundX = 0;
         this.backgroundY = 0;
-        this.facing = 3;
+        this.facing = 4;
         this.destZ = -1;
         this.destX = -1;
         this.destFn = null;
