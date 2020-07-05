@@ -408,11 +408,12 @@ class Game {
         // TODO: Remove after rooms have been drawn.
         if (this.room >= 31 && this.room <= 78) {
             let newBackX = -(((this.room - 31) % 8) * 998.5) - 38;
-            let newBackY = -((~~((this.room - 31) / 8)) * 510.75) + 1;   // 529
+            let newBackY = -((~~((this.room - 31) / 8)) * 510.75) + 1;
             this.wrap.style.backgroundPosition = newBackX + 'px ' + newBackY + 'px';
         }
 
         this.fadeIn(this.screen);
+        this.ego.ignore = false;
         this.ego.show();
         this.fadeIn(this.ego);
 

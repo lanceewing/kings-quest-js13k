@@ -50,7 +50,6 @@ class Ego extends Actor {
 
                     // Set the new room for ego.
                     this.room = edgeData;
-                    console.log(`room: ${this.room}`);
 
                     // 1 = left/west
                     // 2 = right/east
@@ -91,6 +90,12 @@ class Ego extends Actor {
                             //});
                             break;
                     }
+
+                    // Ignore objects while we're changing rooms.
+                    this.ignore = true;
+
+                    // Previously positions are not applicable when room changes.
+                    this.positions = [];
 
                     this.step = 1;
                 }
