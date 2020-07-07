@@ -61,43 +61,34 @@ class Ego extends Actor {
                         case 1: // From the left edge of screen.
                             this.setPosition(955 - this.width, this.y, this.z);
                             this.setDirection(Sprite.LEFT);
-                            //this.moveTo(960 - this.width - 50, this.z, function () {
-                            //    this.game.inputEnabled = true;
-                            //});
                             break;
 
                         case 2: // From the right edge of screen
                             this.setPosition(5, this.y, this.z);
                             this.setDirection(Sprite.RIGHT);
-                            //this.moveTo(this.width + 50, this.z, function () {
-                            //    this.game.inputEnabled = true;
-                            //});
                             break;
                         
                         case 3: // From the bottom edge of screen
                             this.setPosition(this.x, this.y, 355);
                             this.setDirection(Sprite.OUT);
-                            //this.moveTo(this.x, 360, function () {
-                            //    this.game.inputEnabled = true;
-                            //});
                             break;
 
                         case 4: // From the horizon edge of screen.
                             this.setPosition(this.x, this.y, 980);
                             this.setDirection(Sprite.IN);
-                            //this.moveTo(this.x, 975, function () {
-                            //    this.game.inputEnabled = true;
-                            //});
                             break;
                     }
 
                     // Ignore objects while we're changing rooms.
-                    this.ignore = true;
+                    //this.ignore = true;
 
                     // Previously positions are not applicable when room changes.
                     this.positions = [];
 
                     this.step = 1;
+
+                    // Store the edge that ego entered the new room.
+                    this.edge = edge;
                 }
             }
         }
