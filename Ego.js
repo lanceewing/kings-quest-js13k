@@ -78,10 +78,7 @@ class Ego extends Actor {
                             this.setDirection(Sprite.IN);
                             break;
                     }
-
-                    // Ignore objects while we're changing rooms.
-                    //this.ignore = true;
-
+                    
                     // Previously positions are not applicable when room changes.
                     this.positions = [];
 

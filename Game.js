@@ -414,27 +414,13 @@ class Game {
 
         // It is possible that ego has walked into the position of another object when
         // entering the room, so we scan to find a new position.
-
-        let edge = this.ego.edge;
-        if (edge && this.objs.length > 0) {
-            let {x, y, z} = this.ego;
-            for (let i=0, n=0, s=1; 
-                 this.objs.some(o => this.ego.touching(o)); 
-                 i+=(s*=-1)*n++) {
-
-                if (edge < 3) {
-                    // Left or Right - Scan up and down
-                    this.ego.setPosition(x, y, z + i);
-                }
-                else if (edge < 5) {
-                    // Top or Bottom - Scan left and right
-                    this.ego.setPosition(x + i, y, z);
-                }
-            }
+        let i=0, n=0, s=1, {edge, x, z} = this.ego;
+        while (edge < 5 && this.objs.some(o => this.ego.touching(o))) {
+            this.ego.setPosition(x + (edge > 2? i : 0), 0, z + (edge < 3? i : 0));
+            i+=(s*=-1)*n++;
         }
 
         this.fadeIn(this.screen);
-        this.ego.ignore = false;
         this.ego.show();
         this.fadeIn(this.ego);
 
