@@ -1,0 +1,13 @@
+{
+    "compress": {
+        "passes": 10,
+        "booleans_as_integers": true
+    },
+    "mangle": {
+        "properties": {
+            "reserved": ["seed", "bowl", "carrot", "walnut", "cheese", "money", "clover",
+                         "dagger", "egg", "fiddle", "mirror", "mushroom", "note", "pouch",
+                         "sceptre", "shield", "bow"]
+        }
+    }
+}
