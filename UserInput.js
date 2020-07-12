@@ -1,27 +1,11 @@
 class UserInput {
 
-  static LEFT  = 0x01;
-  static UP    = 0x02;
-  static RIGHT = 0x04;
-  static DOWN  = 0x08;
-
   /**
    * Constructor for UserInput.
-   * 
-   * @param {Game} game
-   * @param {HTMLElement} screen 
    */
-  constructor(game, screen) {
-    this.game = game;
-    this.screen = screen;
+  constructor() {
     this.keys = {};
     this.oldKeys = {};
-    this.xMouse = 0;
-    this.yMouse = 0;
-    this.mouseButton = 0;
-    this.dragStart = null;
-    this.dragNow = null;
-    this.dragEnd = null;
     this.joystick = 0;
     this.oldJoystick = 0;
   }
@@ -32,108 +16,6 @@ class UserInput {
   enableInput() {
     document.onkeydown = e => this.keyDown(e);
     document.onkeyup = e => this.keyUp(e);
-    this.screen.onmousedown = e => this.mouseDown(e);
-    this.screen.onmouseup = e => this.mouseUp(e);
-    this.screen.onmousemove = e => this.mouseMove(e);
-    this.screen.ontouchend = e => this.touchEnd(e);
-    this.screen.ontouchstart = e => this.touchStart(e);
-    this.screen.ontouchmove = e => this.touchMove(e);
-  }
-
-  /**
-   * 
-   * @param {MouseEvent} e 
-   */
-  mouseDown(e) {
-    if (this.game.running) {
-      this.dragStart = {
-        x: e.pageX - this.screen.offsetLeft,
-        y: e.pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-      this.dragEnd = this.dragNow = null;
-    }
-    this.mouseButton = 1;
-    e.preventDefault();
-  }
-
-  /**
-   * 
-   * @param {MouseEvent} e 
-   */
-  mouseUp(e) {
-    if (this.game.running) {
-      this.dragEnd = {
-        x: e.pageX - this.screen.offsetLeft,
-        y: e.pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-    }
-    this.mouseButton = 0;
-    e.preventDefault();
-  }
-
-  /**
-   * 
-   * @param {MouseEvent} e 
-   */
-  mouseMove(e) {
-    this.xMouse = e.pageX - this.screen.offsetLeft;
-    this.yMouse = e.pageY - this.screen.offsetTop;
-    if ((this.mouseButton == 1) && (this.game.running)) {
-      this.dragNow = {
-        x: e.pageX - this.screen.offsetLeft,
-        y: e.pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-    }
-  }
-
-  /**
-   * 
-   * @param {TouchEvent} e 
-   */
-  touchEnd(e) {
-    if (this.game.running) {
-      this.dragEnd = {
-        x: e.changedTouches[0].pageX - this.screen.offsetLeft,
-        y: e.changedTouches[0].pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-    }
-    this.xMouse = e.changedTouches[0].pageX - this.screen.offsetLeft;
-    this.yMouse = e.changedTouches[0].pageY - this.screen.offsetTop;
-    this.mouseButton = 1;
-    if (e.cancelable) e.preventDefault();
-  }
-
-  /**
-   * 
-   * @param {TouchEvent} e 
-   */
-  touchStart(e) {
-    if (this.game.running) {
-      this.dragStart = {
-        x: e.changedTouches[0].pageX - this.screen.offsetLeft,
-        y: e.changedTouches[0].pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-      this.dragEnd = this.dragNow = null;
-    }
-  }
-
-  /**
-   * 
-   * @param {TouchEvent} e 
-   */
-  touchMove(e) {
-    if (this.game.running) {
-      this.dragNow = {
-        x: e.changedTouches[0].pageX - this.screen.offsetLeft,
-        y: e.changedTouches[0].pageY - this.screen.offsetTop,
-        t: (new Date()).getTime()
-      };
-    }
   }
 
   /**
@@ -163,47 +45,31 @@ class UserInput {
   }
 
   /**
-   * Remove event handlers for mouse, touch and key events.
-   */
-  disableInput() {
-    document.onkeydown = null;
-    document.onkeyup = null;
-    this.screen.onmousedown = null;
-    this.screen.onmouseup = null;
-    this.screen.onmousemove = null;
-    this.screen.ontouchend = null;
-    this.screen.ontouchstart = null;
-    this.screen.ontouchmove = null;
-    this.oldkeys = this.keys = {};
-    this.oldJoystick = this.joystick = 0;
-  }
-
-  /**
    * Tests if the left button is being held down.
    */
   left() {
-    return (this.joystick & UserInput.LEFT);
+    return (this.joystick & 1);
   }
 
   /**
    * Tests if the right button is being held down.
    */
   right() {
-    return (this.joystick & UserInput.RIGHT);
+    return (this.joystick & 4);
   }
 
   /**
    * Tests if the up button is being held down.
    */
   up() {
-    return (this.joystick & UserInput.UP);
+    return (this.joystick & 2);
   }
 
   /**
    * Tests if the down button is being held down.
    */
   down() {
-    return (this.joystick & UserInput.DOWN);
+    return (this.joystick & 8);
   }
 
   /**
@@ -211,9 +77,7 @@ class UserInput {
    */
   processUserInput(ego) {
     // Process any user input for the main player sprite (ego).
-    if (ego) {
-      ego.processUserInput();
-    }
+    ego.processUserInput();
 
     // Keep track of what the previous state of each key was.
     this.oldkeys = {};
