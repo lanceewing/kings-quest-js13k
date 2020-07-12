@@ -120,17 +120,6 @@ span {
   background-image: url(kq1_sms.png);
   background-size: 8025px 3090px;
   background-position: -38px 1px;  /* room 31 */
-  
-  /* (995 gaps horiz)
-  -1032
-  -2027
-  -3022
-
-  Down: (529 gaps vert)
-  -555
-  -1084
-
-  */
 
   top: 50vh;
   left: 50vw;
@@ -171,7 +160,6 @@ x-shadow {
 x-sprite canvas {
   width: 100%;
   height: 100%;
-  /* image-rendering: pixelated; */
 }
 .dark {
   filter: brightness(0.4) saturate(3);
