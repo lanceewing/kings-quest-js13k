@@ -617,12 +617,4 @@ class Game {
         elem.style.transition = 'opacity 0.5s';
         elem.style.opacity = 0.0;
     }
-  
-    /**
-     * Shakes the screen.
-     */
-    shakeScreen() {
-        this.screen.classList.add('shake');
-        setTimeout(() => this.screen.classList.remove('shake'), 1000);
-    }
 }
