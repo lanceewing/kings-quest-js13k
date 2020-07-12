@@ -1,0 +1,4 @@
+#!/usr/bin/sh
+rm zips/*.zip
+tools/kzip.exe zips/min_kzip.zip min.html
+tools/advzip.exe -a -4 -i 10000 zips/min_advzip.zip min.html
