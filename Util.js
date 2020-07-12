@@ -1,23 +1,6 @@
 class Util {
 
     /**
-     * Linear congruential generator algorithm with a fixed seed. Gives the appearance
-     * of being random but always generates the numbers in the same sequence. This has
-     * been done deliberately.
-     * 
-     * @param {number} seed 
-     * 
-     * @returns The created Linear Congruential Generator.
-     */
-    static random(seed) {
-        let _random = seed || 481731;
-        return function(n) {
-            _random = (_random * 1664525 + 1013904223) & 0xFFFFFFFF;
-            return (_random % n);
-        };
-    }
-
-    /**
      * Renders the given emoji text at that given font size on a canvas. Returns that canvas.
      * 
      * @param {*} emojiText The emoji text to render.
