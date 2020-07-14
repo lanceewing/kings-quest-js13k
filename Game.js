@@ -433,37 +433,14 @@ class Game {
      * @param {Array} prop 
      */
     addPropToRoom(prop) {
-        let obj;
+        // We cache the obj when it isn't in the dom rather than recreate. It might remember it's state.
+        let obj = prop[8];
 
         // Room#, type, name, content, width, height, x, y, element reference
 
-        // We cache the obj when it isn't in the dom rather than recreate. It might remember it's state.
-        obj = prop[8];
-
         if (!obj) {
-            // Switch on the type of prop
-            switch (prop[1]) {
-                case 0: // Actor
-                    break;
-
-                case 1: // Item
-                    obj = new Sprite();
-                    obj.init(this, prop[4], prop[5], prop[3]);
-                    obj.item = true;
-                    break;
-
-                case 2: // Prop
-                case 3:
-                case 4:
-                    obj = new Sprite();
-                    obj.init(this, prop[4], prop[5], prop[3]);
-                    break;
-
-                case 5: // Prop without shadow
-                    obj = new Sprite();
-                    obj.init(this, prop[4], prop[5], prop[3], false);
-                    false;
-            }
+            obj = new Sprite();
+            obj.init(this, prop[4], prop[5], prop[3], prop[1] != 5);
 
             if (prop[1] == 3) {
                 obj.classList.add('light');
@@ -472,24 +449,8 @@ class Game {
                 obj.classList.add('dark');
             }
 
-            let name = prop[2];
-            if (name.startsWith('#')) {
-                // If name starts with # then it is a unique prop/item.
-                obj.id = name = prop[2].substring(1);
-
-            } else {
-                // If this is not a unique object, then we set a class.
-                obj.classList.add(name);
-
-                // If the name contains _ then we also split on this and add classes for
-                // each part, e.g. for green_key we add "green" and "key".
-                if (name.indexOf('_') > -1) {
-                    name.split('_').forEach(part => obj.classList.add(part));
-                }
-            }
-
-            // Some names have _ in them, e.g. green_key, but we use "green key" in sentences.
-            obj.dataset.name = name.replace('_', ' ');
+            // If this is not a unique object, then we set a class.
+            obj.classList.add(obj.dataset.name = prop[2]);
 
             obj.propData = prop;
             obj.setPosition(prop[6], 0, prop[7]);
