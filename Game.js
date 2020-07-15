@@ -10,8 +10,6 @@ class Game {
     
     thing = '';
 
-    time = 0;
-
     score = 0;
 
     itemsLeft = 0;
