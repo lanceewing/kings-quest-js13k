@@ -1,7 +1,8 @@
 {
     "compress": {
-        "passes": 10,
-        "booleans_as_integers": true
+        "booleans_as_integers": true,
+        "ecma": 6,
+        "unused": false
     },
     "mangle": {
         "properties": {
@@ -9,5 +10,6 @@
                          "dagger", "egg", "fiddle", "mirror", "mushroom", "note", "pouch",
                          "sceptre", "shield", "bow"]
         }
-    }
+    },
+    "toplevel": true
 }
