@@ -182,9 +182,6 @@ class Game {
     init() {
         this._gameOver = false;
         this.inputEnabled = true;
-        this.time = 0;
-  
-        window.onclick = null;
   
         this.screen.onclick = e => this.processCommand(e);
   
@@ -319,7 +316,6 @@ class Game {
             this.delta = now - (this.lastTime ? this.lastTime : (now - 16));
             this.stepFactor = this.delta * 0.06;
             this.lastTime = now;
-            this.time += this.delta;
         }
     }
 
