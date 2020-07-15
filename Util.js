@@ -109,8 +109,6 @@ class Util {
         let visitMap = new Uint32Array(imgData.data.length);
         let queue = new Queue();
 
-        console.clear();
-
         queue.enqueue(startX);
         queue.enqueue(startY);
 
@@ -168,7 +166,6 @@ class Util {
             }
         }
         catch (err) {
-            console.log('err: ' + err);
         }
 
         ctx.putImageData(imgData, 0, 0);
