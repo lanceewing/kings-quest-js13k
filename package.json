@@ -4,7 +4,7 @@
   "description": "This is an attempt to port the classic graphic adventure game, King's Quest: The Quest for the Crown to HTML5 using the rules of the js13kgames contest.",
   "main": "Game.js",
   "scripts": {
-    "minify-js": "terser Logic.js Queue.js Util.js UserInput.js Sprite.js Actor.js Ego.js Game.js ZzFX.micro.js player-small.js --config-file terser_config.json -o min.js",
+    "minify-js": "terser combined.js --config-file terser_config.json -o min.js",
     "minify-css": "cleancss -O2 -o min.css Game.css",
     "minify-html": "html-minifier-terser --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype -o min.html index_min.html",
     "test": "echo \"Error: no test specified\" && exit 1"
