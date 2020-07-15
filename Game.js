@@ -334,7 +334,7 @@ class Game {
         let objsLen = this.objs.length;
 
         // Iterate over all of the Sprites in the current room, invoking update on each on.
-        for (let i=-1, a1=this.ego; i < objsLen; a1 = this.objs[i]) {
+        for (let i=-1, a1=this.ego; i < objsLen; a1 = this.objs[++i]) {
             if (a1) {
                 a1.update();
 
@@ -507,9 +507,7 @@ class Game {
         item.dataset.name = name;
         this.items.appendChild(item);
 
-        item.onmouseenter = e => this.objMouseEnter(e);
-        item.onmouseleave = e => this.objMouseLeave(e);
-        item.onclick = e => this.objClicked(e);
+        this.addObjEventListeners(item);
 
         this.inventory[name] = item;
     }
