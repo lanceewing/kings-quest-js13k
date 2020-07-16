@@ -102,70 +102,44 @@ class Util {
      * @param {number} startY 
      */
     static reduceEdges(ctx, startX, startY) {
-        let width = ctx.canvas.width;
-        let height = ctx.canvas.height;
+        let { width, height } = ctx.canvas;
         let dataWidth = (width << 2);
         let imgData = ctx.getImageData(0, 0, width, height);
         let visitMap = new Uint32Array(imgData.data.length);
-        let queue = new Queue();
+        let queue = [[startX, startY]];
 
-        queue.enqueue(startX);
-        queue.enqueue(startY);
+        while (queue.length) {
+            // Get pixel position to test from queue.
+            let [x, y] = queue.shift();
+            let pos = ((y * dataWidth) + (x << 2));
 
-        try {
-            while (!queue.isEmpty()) {
-                // Get pixel position to test from queue.
-                let x = queue.dequeue();
-                let y = queue.dequeue();
-                let pos = ((y * dataWidth) + (x << 2));
+            // Check if we've been here before.
+            if (visitMap[pos]) continue;
 
-                // Check if we've been here before.
-                let visited = visitMap[pos];
-                if (visited) {
-                    continue;
-                }
-                visitMap[pos] = 1;
+            visitMap[pos] = 1;
 
-                let red = imgData.data[pos];
-                let green = imgData.data[pos + 1];
-                let blue = imgData.data[pos + 2];
-                let alpha = imgData.data[pos + 3];
-                let brightness = Math.round(Math.sqrt((red * red * 0.241) + (green * green * 0.691) + (blue * blue * 0.068)));
-                let spread = false;
+            let [red, green, blue, alpha] = imgData.data.slice(pos, pos + 4);
+            let brightness = Math.round(Math.sqrt((red * red * 0.241) + (green * green * 0.691) + (blue * blue * 0.068)));
+            let spread = false;
 
-                if (alpha == 0) {
-                    spread = true;
-                }
-                else if ((red == 0) && (green == 0) && (blue == 0)) {
-                    imgData.data[pos + 3] = 0;
-                    spread = true;
-                }
-                else if (brightness < 70) {
-                    imgData.data[pos + 3] = Math.round(brightness * (255 / 70));
-                    spread = true;
-                }
-
-                if (spread) {
-                    if (x > 0) {
-                        queue.enqueue(x - 1);
-                        queue.enqueue(y);
-                    }
-                    if (x < width - 1) {
-                        queue.enqueue(x + 1);
-                        queue.enqueue(y);
-                    }
-                    if (y > 0) {
-                        queue.enqueue(x);
-                        queue.enqueue(y - 1);
-                    }
-                    if (y < height - 1) {
-                        queue.enqueue(x);
-                        queue.enqueue(y + 1);
-                    }
-                }
+            if (alpha == 0) {
+                spread = true;
             }
-        }
-        catch (err) {
+            else if ((red == 0) && (green == 0) && (blue == 0)) {
+                imgData.data[pos + 3] = 0;
+                spread = true;
+            }
+            else if (brightness < 70) {
+                imgData.data[pos + 3] = Math.round(brightness * (255 / 70));
+                spread = true;
+            }
+
+            if (spread) {
+                if (x > 0) queue.push([x - 1, y]);
+                if (x < width - 1) queue.push([x + 1, y]);
+                if (y > 0) queue.push([x, y - 1]);
+                if (y < height - 1) queue.push([x, y + 1]);
+            }
         }
 
         ctx.putImageData(imgData, 0, 0);
