@@ -10,11 +10,15 @@ class Util {
      */
     static renderEmoji(emojiText, size) {
         let canvas = document.createElement('canvas');
-        canvas.height = size * 2;
-        canvas.width = size * 4;
+        canvas.height = size + (size / 8) + 20;
+        canvas.width = size * 1.4 + 10;
         let ctx = canvas.getContext('2d');
         ctx.font = `${size}px Segoe UI Emoji`;
-        ctx.fillText(emojiText, (size / 2), size + (size / 2));
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(emojiText, 5, canvas.height - 5);
+
+        //let textMetrics = ctx.measureText(emojiText);
+        //console.log(`ratio: ${textMetrics.width/size}, size: ${size}, text width: ${textMetrics.width}, canvas width: ${canvas.width}, emojiText: ${emojiText}`);
 
         // On Windows, this reduces the thick black edges.
         let [minX, minY, maxX, maxY] = Util.reduceEdges(ctx, 0, 0);
