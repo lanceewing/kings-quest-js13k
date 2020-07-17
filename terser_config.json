@@ -2,7 +2,9 @@
     "compress": {
         "booleans_as_integers": true,
         "ecma": 6,
-        "unused": false
+        "unused": false,
+        "unsafe": true,
+        "unsafe_math": true
     },
     "mangle": {
         "properties": {
