@@ -8,27 +8,6 @@ class Ego extends Actor {
     }
 
     /**
-     * Initialises Ego.
-     * 
-     * @param {Game} game 
-     * @param {number} width The width of the Actor.
-     * @param {number} height The height of the Actor.
-     * @param {string} content The content to add into the Actor. Optional.
-     */
-    init(game, width, height, content) {
-        super.init(game, width, height, content);
-    }
-
-    /**
-     * 
-     * @param {Game} game 
-     */
-    update(game) {
-        super.update(game);
-        
-    }
-
-    /**
      * 
      * @param {number} edge 
      */
