@@ -17,12 +17,6 @@ body {
 span {
   display: inline-block;
 }
-@media (orientation: landscape) {
-
-}
-@media (orientation: portrait) {
-
-}
 #overlay {
   width: 100%;
   height: 100%;
