@@ -9,33 +9,20 @@ class Util {
      * @returns The created canvas with the rendered emoji text at the given font size.
      */
     static renderEmoji(emojiText, size) {
-        let fontDef = `${size}px Segoe UI Emoji`;
         let canvas = document.createElement('canvas');
+        canvas.height = size * 2;
+        canvas.width = size * 4;
         let ctx = canvas.getContext('2d');
-        ctx.font = fontDef;
-        ctx.textAlign = "center"; 
-        ctx.textBaseline = "ideographic";
-        
-        let textMetrics = ctx.measureText(emojiText);
-        canvas.height = size + (size / 8);
-        canvas.width = textMetrics.width - (size / 4);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font = fontDef;
-        ctx.textAlign = "center"; 
-        ctx.textBaseline = "ideographic";
-        ctx.fillText(emojiText, canvas.width / 2, canvas.height);
+        ctx.font = `${size}px Segoe UI Emoji`;
+        ctx.fillText(emojiText, (size / 2), size + (size / 2));
 
         // On Windows, this reduces the thick black edges.
-        Util.reduceEdges(ctx, 0, 0);
-
-        // Work out where the edges of the image are.
-        let [minX, minY, maxX, maxY] = Util.findEdges(ctx);
+        let [minX, minY, maxX, maxY] = Util.reduceEdges(ctx, 0, 0);
 
         // Redraw the canvas, so that we can remove white space and add a shadow.
         let emojiCanvas = document.createElement('canvas');
-        let shadowWidth = 1;
-        let newWidth = ((maxX - minX) + 1 + shadowWidth*2);
-        let newHeight = ((maxY - minY) + 1 + shadowWidth*2);
+        let newWidth = ((maxX - minX) + 3);
+        let newHeight = ((maxY - minY) + 3);
         emojiCanvas.width = newWidth;
         emojiCanvas.height = newHeight;
         let emojiCtx = emojiCanvas.getContext('2d');
@@ -43,52 +30,11 @@ class Util {
         emojiCtx.shadowBlur = 3;
         emojiCtx.drawImage(
             canvas, 
-            minX-shadowWidth, minY-shadowWidth, newWidth, newHeight,
+            minX-1, minY-1, newWidth, newHeight,
             0, 0, newWidth, newHeight, 
         );
 
         return emojiCanvas;
-    }
-
-    /**
-     * Finds the edges of the visible pixel data within the given canvas context.
-     * 
-     * @param {CanvasRenderingContext2D} ctx 
-     * 
-     * @returns {Array} An array containing the minX, minY, maxY and maxY values.
-     */
-    static findEdges(ctx) {
-        let width = ctx.canvas.width;
-        let height = ctx.canvas.height;
-        let dataWidth = (width << 2);
-        let imgData = ctx.getImageData(0, 0, width, height);
-        let minX = width;
-        let minY = height;
-        let maxX = 0;
-        let maxY = 0;
-
-        for (let y = 0; y < height; y++) {
-            for (let x = 0; x < width; x++) {
-                let pos = ((y * dataWidth) + (x << 2));
-                let alpha = imgData.data[pos + 3];
-                if (alpha > 0) {
-                    if (x < minX) {
-                        minX = x;
-                    }
-                    if (x > maxX) {
-                        maxX = x;
-                    }
-                    if (y < minY) {
-                        minY = y;
-                    }
-                    if (y > maxY) {
-                        maxY = y;
-                    }
-                }
-            }
-        }
-
-        return [minX, minY, maxX, maxY];
     }
 
     /**
@@ -107,6 +53,9 @@ class Util {
         let imgData = ctx.getImageData(0, 0, width, height);
         let visitMap = new Uint32Array(imgData.data.length);
         let queue = [[startX, startY]];
+        let [minX, minY] = [width, height];
+        let maxX = 0;
+        let maxY = 0;
 
         while (queue.length) {
             // Get pixel position to test from queue.
@@ -140,9 +89,18 @@ class Util {
                 if (y > 0) queue.push([x, y - 1]);
                 if (y < height - 1) queue.push([x, y + 1]);
             }
+
+            if (imgData.data[pos + 3]) {
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            }
         }
 
         ctx.putImageData(imgData, 0, 0);
+
+        return [minX, minY, maxX, maxY];
     }
 
     /**
