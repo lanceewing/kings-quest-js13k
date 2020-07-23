@@ -9,12 +9,17 @@ class Sound {
 
     // The sound module only seems to work in Chrome and Firefox.
     this.active = (!(navigator.userAgent.match(/Opera|OPR\//)));
-    
-    if (this.active) {
-      this.add('music', 1, Sound.SONG);
+  }
 
-      // TODO: Add ZzFX sounds.
-    } 
+  /**
+   * Initialises the Sounds.
+   */
+  init() {
+    if (this.active) {
+        this.add('music', 1, Sound.SONG);
+  
+        // TODO: Add ZzFX sounds.
+      }
   }
   
   /**

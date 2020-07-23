@@ -119,6 +119,7 @@ class Game {
         this.defineCustomElements();
         this.userInput = new UserInput(this, screen);
         this.logic = new Logic(this);
+        this.sound = new Sound();
         this.buildMap();
         this.start();
     }
@@ -167,10 +168,24 @@ class Game {
             verb.onclick = e => this.command = this.verb = e.target.dataset.name;
         });
 
-        this.running = true;
-        this.init();
+        // The sound generation might be a bit time consuming on slower machines.
+        setTimeout(() => {
+            this.sound.init();
+        }, 1000);
 
-        this.loop();
+        this.gameOver();
+    }
+
+    /**
+     * 
+     */
+    gameOver() {
+        window.onclick = e => {
+            this.sound.play('music');
+
+            this.init();
+            this.loop();
+        }
     }
 
     /**
@@ -180,7 +195,9 @@ class Game {
     init() {
         this._gameOver = false;
         this.inputEnabled = true;
-  
+        
+        window.onclick = null;
+
         this.screen.onclick = e => this.processCommand(e);
   
         // For restarts, we'll need to remove the objects from the screen.
