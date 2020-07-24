@@ -177,14 +177,21 @@ class Game {
     }
 
     /**
-     * 
+     * @param {string} msg The message to display, optional.
      */
-    gameOver() {
+    gameOver(msg) {
+        this.fadeOut(this.wrap);
+        if (msg) {
+          this.msg.innerHTML = msg;
+        }
         window.onclick = e => {
-            this.sound.play('music');
-
-            this.init();
-            this.loop();
+            this.fadeOut(this.msg);
+            setTimeout(() => this.msg.style.display = 'none', 200);
+            setTimeout(() => {
+                this.sound.play('music');
+                this.init();
+                this.loop();
+            }, 500);
         }
     }
 
